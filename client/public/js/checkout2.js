@@ -1,0 +1,1 @@
+var x = localStorage.getItem("cart_sum");
