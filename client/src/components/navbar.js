@@ -1,14 +1,42 @@
 import React from "react"
+import NavButton from "./common/navbutton.js"
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import {Toast} from "react-materialize"
+import NavItemDropdown from "./common/navitemdropdown.js"
 
 export default class NavBar extends React.Component {
 	constructor(props) {
 		super(props);
-		
+		this.toggle = this.toggle.bind(this)
+		this.state = {
+			isOpen: false
+		}
+	}
+
+	toggle(){
+		this.setState({
+			isOpen: !this.state.isOpen
+		})
+	}
+
+	get cartItems(){
+		if (this.props.cart.length === 0) {
+			return (
+				<li>Your cart is empty. Add items to your cart!</li>
+				)
+		} else {
+			let cart = this.props.cart
+			cart.map(function(item){
+			return(
+				<NavItemDropdown item_name = {item.item_name} img_url = {item.img_url} quantity = {item.quantity} price = {item.price}/>
+				)
+			})
+		}
+
 	}
 
 	render(){
 		return(
-
 			<div>
 
 			
@@ -18,8 +46,8 @@ export default class NavBar extends React.Component {
 		{/*		<!-- CONTAINER -->*/}
 				<div className="container clearfix contact" >
 					<ul className="secondary_menu">
-						<li><a href="./login" >Log in</a></li>
-						<li><a href="my-account.html" >Register</a></li>
+						<li><a href="#" >Log in</a></li>
+						<li><a href="#" >Register</a></li>
 					</ul>
 					
 					<div className="live_chat"><a href="javascript:void(0);" ><i className="fa fa-comment-o"></i> Live chat</a></div>
@@ -47,27 +75,18 @@ export default class NavBar extends React.Component {
 						<form method="get" action="#">
 							<input type="text" name="search" value="Search"/>
 						</form>
-					</div>{/*<!-- SEARCH FORM -->*/}
+					</div>{/*<!-- SEARCH FORM -->*/}	
 					
 					
 		{/*			<!-- SHOPPING BAG -->*/}
 					<div className="shopping_bag">
-						<a className="shopping_bag_btn" href="javascript:void(0);" ><i className="fa fa-shopping-cart"></i><p>shopping bag</p><span id="bagquantity">0</span></a>
+						<a className="shopping_bag_btn" href="javascript:void(0);" ><i className="fa fa-shopping-cart"></i><p>shopping bag</p><span id="bagquantity">{this.props.totalQuantity}</span></a>
 						<div className="cart">
 							<ul className="cart-items cart-main">
-{/*								<!-- <li className="clearfix">
-									<img className="cart_item_product" src="images/tovar/women/nomnom.jpg" alt="" />
-									<a href="product-page.html" className="cart_item_title">popover sweatshirt in floral jacquard</a>
-									<span className="cart_item_price">1 × $98.00</span>
-								</li>
-								<li className="clearfix">
-									<img className="cart_item_product" src="images/tovar/women/3.jpg" alt="" />
-									<a href="product-page.html" className="cart_item_title">japanese indigo denim jacket</a>
-									<span className="cart_item_price">2 × $158.00</span>
-								</li> -->*/}
+								{this.cartItems}
 							</ul>
 							<div className="cart_total">
-								<div className="clearfix"><span className="cart_subtotal">bag subtotal: <b className="bagtotal">$414</b></span></div>
+								<div className="clearfix"><span className="cart_subtotal">bag subtotal: <b className="bagtotal">{this.props.totalPrice}</b></span></div>
 								<a className="btn active" href="checkout.html">Checkout</a>
 							</div>
 						</div>
@@ -75,7 +94,7 @@ export default class NavBar extends React.Component {
 					
 					
 				{/*	<!-- LOVE LIST -->*/}
-					<div className="love_list">
+{/*					<div className="love_list">
 						<a className="love_list_btn" href="javascript:void(0);" ><i className="fa fa-heart-o"></i><p>Love list</p><span>0</span></a>
 						<div className="cart">
 							<ul className="cart-items">
@@ -86,23 +105,18 @@ export default class NavBar extends React.Component {
 								<a className="btn active" href="checkout.html">Checkout</a>
 							</div>
 						</div>
-					</div>{/*<!-- //LOVE LIST -->*/}
-					
-					{/*
-					<!-- MENU -->*/}
-					<ul className="navmenu center">
-						<li className="sub-menu first active"><a href="javascript:void(0);" >Home</a>
-					
-						</li>
-						<li className="sub-menu"><a href="javascript:void(0);" >Figurine</a>
-						</li>
-						<li className="sub-menu"><a href="javascript:void(0);" >Pins</a>
-						</li>
-						<li className="sub-menu"><a href="shoes.html" >Stickers</a></li>
-						<li className="sub-menu"><a href="shoes.html" >Jewelry</a></li>
-						
-						<li className="last sale_menu"><a href="sale.html" >Sale</a></li>
-					</ul>{/*<!-- //MENU -->*/}
+					</div>
+*/}
+				{/*<!-- //LOVE LIST -->*/}
+	
+
+					<Nav className = "navmenu center">
+						<NavButton propClass = "first active sub-menu" url="#" name="Home" />
+						<NavButton propClass = "sub-menu" url="#" name="Figurine" />
+						<NavButton propClass = "sub-menu" url="#" name="Stickers" />
+						<NavButton propClass = "sub-menu" url="#" name="Jewelry" />
+						<NavButton propClass = "last sub-menu" url="#" name="Sale" />
+					</Nav>
 				</div>{/*<!-- //MENU BLOCK -->*/}
 			</div> {/*<!-- //CONTAINER -->*/}
 		</div>
