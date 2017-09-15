@@ -1,19 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Navbar from "./components/navbar.js"
 import './App.css';
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			cart: [] //price, quantity, img_url, item_name  		
+		}
+		
+	}
+
+get totalPrice(){
+	if (this.state.cart.length ===0){
+		return 0
+	} else {
+		let sumCart = this.state.cart
+		let sum = sumCart.reduce((a,b)=>{return a.price+b.price},0)
+		return sum
+	}
+}
+
+get totalQuantity(){
+	return this.state.cart.length
+}
+
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Navbar totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} cart={this.state.cart}/>
     );
   }
 }
