@@ -10,7 +10,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			cart: [] //price, quantity, img_url, item_name  		
+			cart: [] //price, quantity, imgUrl, product_name  		
 		}
 		
 	}
@@ -30,6 +30,8 @@ get totalQuantity(){
 }
 
 
+//need to write getCartChangeHandler function as props to pass down to children
+
   render() {
     return (
     <div id="page">
@@ -38,7 +40,7 @@ get totalQuantity(){
       		<Navbar totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} cart={this.state.cart}/>
         </header>
 
-		<section id="home" class="padbot0">		
+		<section id="home" className="padbot0">		
 			<div className="flexslider top_slider">
 				<ul className="slides">
 					<li className="slide1">	
@@ -51,7 +53,7 @@ get totalQuantity(){
 
         <NewArrival/>
 
-        <hr class="container"/>
+        <hr className="container"/>
 
         <Instagram/>
 
