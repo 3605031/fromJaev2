@@ -1,6 +1,96 @@
 import React from "react"
-import dummyObj from "./common/dummy.json"
 import Flexbox from "flexbox-react"
+let dummyObj = [{
+    "imgUrl" : "images/tovar/women/boo.png" ,
+    "product_ID":123,
+    "product_name": "dummy",
+   " product_category": "featured",
+    "description": "dummy",
+    "price": 111,
+    "quantity": 4,
+    "sku": "oaiwejf8123"
+},{
+    "imgUrl" : "images/tovar/women/slowpoke.jpg" ,
+    "product_ID":123,
+    "product_name": "dummy",
+   " product_category": "featured",
+    "description": "dummy",
+    "price": 111,
+    "quantity": 4,
+    "sku": "oaiwejf8123"
+},{
+    "imgUrl" : "images/tovar/women/weedMon.jpg" ,
+    "product_ID":123,
+    "product_name": "dummy",
+   " product_category": "featured",
+    "description": "dummy",
+    "price": 111,
+    "quantity": 4,
+    "sku": "oaiwejf8123"
+},{
+    "imgUrl" : "images/tovar/women/flowerbutt.jpg" ,
+    "product_ID":123,
+    "product_name": "dummy",
+   " product_category": "featured",
+    "description": "dummy",
+    "price": 111,
+    "quantity": 4,
+    "sku": "oaiwejf8123"
+},{
+    "imgUrl" : "images/tovar/women/crush.jpg" ,
+    "product_ID":123,
+    "product_name": "dummy",
+   " product_category": "featured",
+    "description": "dummy",
+    "price": 111,
+    "quantity": 4,
+    "sku": "oaiwejf8123"
+},{
+    "imgUrl" : "images/tovar/women/boo.png" ,
+    "product_ID":123,
+    "product_name": "dummy",
+   " product_category": "featured",
+    "description": "dummy",
+    "price": 111,
+    "quantity": 4,
+    "sku": "oaiwejf8123"
+},{
+    "imgUrl" : "images/tovar/women/slowpoke.jpg" ,
+    "product_ID":123,
+    "product_name": "dummy",
+   " product_category": "featured",
+    "description": "dummy",
+    "price": 111,
+    "quantity": 4,
+    "sku": "oaiwejf8123"
+},{
+    "imgUrl" : "images/tovar/women/weedMon.jpg" ,
+    "product_ID":123,
+    "product_name": "dummy",
+   " product_category": "featured",
+    "description": "dummy",
+    "price": 111,
+    "quantity": 4,
+    "sku": "oaiwejf8123"
+},{
+    "imgUrl" : "images/tovar/women/flowerbutt.jpg" ,
+    "product_ID":123,
+    "product_name": "dummy",
+   " product_category": "featured",
+    "description": "dummy",
+    "price": 111,
+    "quantity": 4,
+    "sku": "oaiwejf8123"
+},{
+    "imgUrl" : "images/tovar/women/crush.jpg" ,
+    "product_ID":123,
+    "product_name": "dummy",
+   " product_category": "featured",
+    "description": "dummy",
+    "price": 111,
+    "quantity": 4,
+    "sku": "oaiwejf8123"
+}]
 
 export default class FeaturedProducts extends React.Component {
 	constructor(props) {
@@ -65,7 +155,7 @@ export default class FeaturedProducts extends React.Component {
 									<div className="tovar_img_wrapper">
 										<img className="img" src="images/tovar/women/weedMon.jpg" alt="" />
 										<img className="img_h" src="images/tovar/women/weedMon.jpg" alt="" />
-									</div>
+									</div>	
 									<div className="tovar_item_btns">
 										
 										<a className="add_bag" href="javascript:void(0);" ><i className="fa fa-shopping-cart"></i></a>

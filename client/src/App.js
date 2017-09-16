@@ -52,7 +52,7 @@ class App extends Component {
 		      		<Navbar totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} cart={this.state.cart}/>
 		        </header>
 
-				<section id="home" class="padbot0">		
+				<section id="home" className="padbot0">		
 					<div className="flexslider top_slider">
 						<ul className="slides">
 							<li className="slide1">	
