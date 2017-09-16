@@ -1,11 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-var exphbs = require("express-handlebars");
-var htmlRoutes = require("./routes/html-routes.js");
-var apiRoutes = require("./routes/api-routes.js");
+const bluebird = require("bluebird");
 var PORT = process.env.PORT || 4000;
 var mongoose = require("mongoose")
+var routes = require("./routes/routes");
 mongoose.Promise = bluebird
 //Stripe
 var stripe = require("stripe")("sk_test_GWQwhFKlpRKUXR8MF7sikVBz");
@@ -20,11 +19,12 @@ var session = require('express-session');
 var app = express()
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'client/public')));
 app.use("/", routes);
 
 //need to put passport in here !!! 
 
-var db = process.env.MONGODB_URI 
+var db = process.env.MONGODB_URI || 'mongodb://Blake:Soithan1995@ds034677.mlab.com:34677/fromjae'
 // Connect mongoose to our database
 mongoose.connect(db, function(error) {
   // Log any errors connecting with mongoose
@@ -37,8 +37,16 @@ mongoose.connect(db, function(error) {
   }
 });
 
+// Start the server
+app.listen(PORT, function() {
+  console.log("Now listening on port %s! Visit localhost:%s in your browser.", PORT, PORT);
+});
 
-// Sets up the Express App
-// =============================================================
-var app = express();
-var port = process.env.PORT || 3000;
+
+var Product = require("./models/product");
+Product.find()
+      .then(function(doc) {
+        console.log("data here",doc)
+      }).catch(function(err) {
+        console.log(err)
+      });
