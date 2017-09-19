@@ -19,7 +19,7 @@ export default class NavBar extends React.Component {
 		})
 	}
 
-	get cartItems(){
+	getcartItems(){
 		if (this.props.cart.length === 0) {
 			return (
 				<li>Your cart is empty. Add items to your cart!</li>
