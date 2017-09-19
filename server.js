@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const bluebird = require("bluebird");
 var PORT = process.env.PORT || 4000;
-var mongoose = require("mongoose")
+var mongoose = require("mongoose");
+var Product = require("./models/product.js")
 var routes = require("./routes/routes");
 mongoose.Promise = bluebird
 //Stripe
@@ -42,11 +43,3 @@ app.listen(PORT, function() {
   console.log("Now listening on port %s! Visit localhost:%s in your browser.", PORT, PORT);
 });
 
-
-var Product = require("./models/product");
-Product.find()
-      .then(function(doc) {
-        console.log("data here",doc)
-      }).catch(function(err) {
-        console.log(err)
-      });

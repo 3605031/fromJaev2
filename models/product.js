@@ -10,6 +10,7 @@ var productSchema = new Schema({
     description: {type:String,required:false},
     price: {type:Number,required:true},
     quantity: {type:Number,required:true},
+    weight: {type:Number,required:true},
     sku: {type: String, required: false},
     featured : {type:Boolean},
     popular : {type:Boolean},
