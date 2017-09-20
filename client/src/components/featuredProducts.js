@@ -2,7 +2,7 @@ import React from "react"
 import Flexbox from "flexbox-react"
 let dummyObj = [{
     "imgUrl" : "images/tovar/women/boo.png" ,
-    "product_ID":123,
+    "product_ID":1,
     "product_name": "dummy",
    " product_category": "featured",
     "description": "dummy",
@@ -11,7 +11,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/slowpoke.jpg" ,
-    "product_ID":123,
+    "product_ID":2,
     "product_name": "dummy",
    " product_category": "featured",
     "description": "dummy",
@@ -20,7 +20,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/weedMon.jpg" ,
-    "product_ID":123,
+    "product_ID":3,
     "product_name": "dummy",
    " product_category": "featured",
     "description": "dummy",
@@ -29,7 +29,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/flowerbutt.jpg" ,
-    "product_ID":123,
+    "product_ID":4,
     "product_name": "dummy",
    " product_category": "featured",
     "description": "dummy",
@@ -38,7 +38,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/crush.jpg" ,
-    "product_ID":123,
+    "product_ID":17,
     "product_name": "dummy",
    " product_category": "featured",
     "description": "dummy",
@@ -47,7 +47,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/boo.png" ,
-    "product_ID":123,
+    "product_ID":5,
     "product_name": "dummy",
    " product_category": "featured",
     "description": "dummy",
@@ -56,7 +56,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/slowpoke.jpg" ,
-    "product_ID":123,
+    "product_ID":6,
     "product_name": "dummy",
    " product_category": "featured",
     "description": "dummy",
@@ -65,7 +65,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/weedMon.jpg" ,
-    "product_ID":123,
+    "product_ID":7,
     "product_name": "dummy",
    " product_category": "featured",
     "description": "dummy",
@@ -74,7 +74,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/flowerbutt.jpg" ,
-    "product_ID":123,
+    "product_ID":18,
     "product_name": "dummy",
    " product_category": "featured",
     "description": "dummy",
@@ -83,7 +83,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/crush.jpg" ,
-    "product_ID":123,
+    "product_ID":8,
     "product_name": "dummy",
    " product_category": "featured",
     "description": "dummy",
@@ -95,13 +95,18 @@ let dummyObj = [{
 export default class FeaturedProducts extends React.Component {
 	constructor(props) {
 		super(props);
+/*        this.props.handleAddToCart = this.handleAddToCart.bind(this)*/
+        this.renderItems = this.renderItems.bind(this)
 	}
 
-	renderItems = () =>{
+
+
+	renderItems(){
+
 		//eventully, dummyobj will be replaced with an API call to retrieve the items from database 
-		return dummyObj.map(function(toBeReplaced){
+		return dummyObj.map((toBeReplaced)=>{
 			return(	
-					<Flexbox className="padbot40" style={{paddingLeft: "15px", paddingRight: "15px"}}>
+					<div className="padbot40" style={{paddingLeft: "15px", paddingRight: "15px"}} key={toBeReplaced.product_ID}>
 						<div className="tovar_item">
 							<div className="tovar_img">
 								<div className="tovar_img_wrapper feature_item0">
@@ -110,7 +115,7 @@ export default class FeaturedProducts extends React.Component {
 								</div>
 								<div className="tovar_item_btns">
 				
-									<a className="add_bag" href="javascript:void(0);" ><i className="fa fa-shopping-cart"></i></a>
+									<a className="add_bag" onClick={()=>this.props.handleAddToCart()} ><i className="fa fa-shopping-cart"></i></a>
 			
 								</div>
 							</div>
@@ -120,7 +125,7 @@ export default class FeaturedProducts extends React.Component {
 								<span className="tovar_quantity feature_item_quantity0">Quantity: {toBeReplaced.quantity}</span>
 							</div>
 						</div>
-					</Flexbox>
+					</div>
 				)
 		})
 	}
@@ -136,109 +141,10 @@ export default class FeaturedProducts extends React.Component {
 				
 				{/*<!-- ROW -->*/}
 				<Flexbox>
-					<Flexbox className="tovar_wrapper" data-appear-top-offset='-100' data-animated='fadeInUp' >
+					<Flexbox className="tovar_wrapper" data-appear-top-offset='-100' data-animated='fadeInUp' style={{flexWrap:"wrap"}}>
 						{this.renderItems()}
 					</Flexbox>
-				</Flexbox>
-				
-				
-				{/*<!-- ROW -->*/}
-				<Flexbox>
-					
-					{/*<!-- TOVAR WRAPPER -->*/}
-					<div className="tovar_wrapper" data-appear-top-offset='-100' data-animated='fadeInUp'>
-						
-						{/*<!-- TOVAR5 -->*/}
-						<div className="col-lg-3 col-md-3 col-sm-4 col-xs-6 col-ss-12 padbot40">
-							<div className="tovar_item feature_item4">
-								<div className="tovar_img">
-									<div className="tovar_img_wrapper">
-										<img className="img" src="images/tovar/women/weedMon.jpg" alt="" />
-										<img className="img_h" src="images/tovar/women/weedMon.jpg" alt="" />
-									</div>	
-									<div className="tovar_item_btns">
-										
-										<a className="add_bag" href="javascript:void(0);" ><i className="fa fa-shopping-cart"></i></a>
-		
-									</div>
-								</div>
-								<div className="tovar_description clearfix">
-									<a className="tovar_title feature_item_title4" href="product-page.html" >RainbowPOO</a>
-									<span className="tovar_price feature_item_price4">$118.00</span>
-									<span className="tovar_quantity feature_item_quantity4">Quantity: 10</span>
-								</div>
-							</div>
-						</div>{/*<!--TOVAR5 -->*/}
-						
-						<div className="respond_clear_768"></div>
-						
-						{/*<!-- TOVAR6 -->*/}
-						<div className="col-lg-3 col-md-3 col-sm-4 col-xs-6 col-ss-12 padbot40">
-							<div className="tovar_item feature_item5">
-								<div className="tovar_img">
-									<div className="tovar_img_wrapper">
-										<img className="img" src="images/tovar/women/flowerbutt.jpg" alt="" />
-										<img className="img_h" src="images/tovar/women/flowerbutt.jpg" alt="" />
-									</div>
-									<div className="tovar_item_btns">
-										
-										<a className="add_bag" href="javascript:void(0);" ><i className="fa fa-shopping-cart"></i></a>
-										
-									</div>
-								</div>
-								<div className="tovar_description clearfix">
-									<a className="tovar_title feature_item_title5" href="product-page.html" >RainbowPOO</a>
-									<span className="tovar_price feature_item_price5">$118.00</span>
-									<span className="tovar_quantity feature_item_quantity5">Quantity: 10</span>
-								</div>
-							</div>
-						</div>{/*<!-- TOVAR6 -->*/}
-						
-						{/*<!-- TOVAR7 -->*/}
-						<div className="col-lg-3 col-md-3 col-sm-4 col-xs-6 col-ss-12 padbot40">
-							<div className="tovar_item tovar_sale feature_item6">
-								<div className="tovar_img">
-									<div className="tovar_img_wrapper">
-										<img className="img" src="images/tovar/women/crush.jpg" alt="" />
-										<img className="img_h" src="images/tovar/women/crush.jpg" alt="" />
-									</div>
-									<div className="tovar_item_btns">
-										
-										<a className="add_bag" href="javascript:void(0);" ><i className="fa fa-shopping-cart"></i></a>
-										
-									</div>
-								</div>
-								<div className="tovar_description clearfix">
-									<a className="tovar_title feature_item_title6" href="product-page.html" >RainbowPOO</a>
-									<span className="tovar_price feature_item_price6">$118.00</span>
-									<span className="tovar_quantity feature_item_quantity6">Quantity: 10</span>
-								</div>
-							</div>
-						</div>{/*<!-- TOVAR7 -->*/}
-						
-						{/*<!-- TOVAR8 -->*/}
-						<div className="col-lg-3 col-md-3 col-sm-4 col-xs-6 col-ss-12 padbot40">
-							<div className="tovar_item">
-								<div className="tovar_img">
-									<div className="tovar_img_wrapper feature_item7">
-										<img className="img" src="" alt="" />
-										<img className="img_h" src="" alt="" />
-									</div>
-									<div className="tovar_item_btns">
-										
-										<a className="add_bag" href="javascript:void(0);" ><i className="fa fa-shopping-cart"></i></a>
-										
-									</div>
-								</div>
-								<div className="tovar_description clearfix">
-									<a className="tovar_title feature_item_title7" href="product-page.html" >RainbowPOO</a>
-									<span className="tovar_price feature_item_price7">$118.00</span>
-									<span className="tovar_quantity feature_item_quantity7">Quantity: 10</span>
-								</div>
-							</div>
-						</div>{/*<!-- TOVAR8 -->*/}
-					</div>{/*<!-- TOVAR WRAPPER -->*/}
-				</Flexbox>{/*<!-- ROW -->*/}						
+				</Flexbox>				
 			</div>{/*<!-- CONTAINER -->*/}
 		</section>
 

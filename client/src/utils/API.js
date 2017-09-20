@@ -7,5 +7,11 @@ export default {
   },
   getPins : function(){
     return axios.get("/api/pins")
+  },
+  getFigurines : function(){
+    return axios.get("/api/figurines")
+  },
+  getJewelry : function(){
+    return axios.get("/api/jewelry")
   }
 };
