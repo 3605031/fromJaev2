@@ -13,5 +13,29 @@ module.exports = {
       }).catch(function(err) {
         res.json(err);
       });
+  },
+  figurines: function(req,res){
+    Product.find({product_category:"Figurine"})
+      .then(function(doc) {
+        res.json(doc);
+      }).catch(function(err) {
+        res.json(err);
+      });
+  },
+  pins : function(req,res){
+    Product.find({product_category:"Pin"})
+      .then(function(doc) {
+        res.json(doc);
+      }).catch(function(err) {
+        res.json(err);
+      });
+  },
+  jewelry: function(req,res){
+    Product.find({product_category:"Jewelry"})
+      .then(function(doc) {
+        res.json(doc);
+      }).catch(function(err) {
+        res.json(err);
+      });
   }
 };

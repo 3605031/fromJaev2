@@ -14,8 +14,19 @@ var express = require("express")
 var router = new express.Router()
 var productsController = require("../controllers/productsController");
 
-// Get all articles (or optionally a specific quote with an id)
+// Get all products
 router.get("/all", productsController.index)
+
+//get catergorized products
+router.get("/pins",productsController.pins)
+
+router.get("/figurines",productsController.figurines)
+
+router.get("/jewelry",productsController.jewelry)
+
+
+
+
 
 
 module.exports = router;
