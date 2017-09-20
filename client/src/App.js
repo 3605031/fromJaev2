@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import update from "immutability-helper"
 import Navbar from "./components/navbar.js"
 import Featured from "./components/featuredProducts.js"
 import NewArrival from "./components/newArrivals.js"
@@ -42,7 +43,24 @@ class App extends Component {
 		return this.state.cart.length
 	}
 
+/*	addToCart(event, item){
+		event.preventDefault()
+		let addItem = item
+		this.setState((state)=> update(state, {cart:{$push:[item]}}))
+	}
 
+	removeFromCart(event, item){
+		event.preventDefault()
+		let removedItem = item
+		this.setState(prevState=>({
+			cart: prevState.cart.filter(cart =>{return cart !== removedItem})
+		}))
+	}	
+*/
+
+    handleAddToCart(event){
+        console.log("add to cart button works")
+    }
 
   	render() {
 	    return (
@@ -61,7 +79,7 @@ class App extends Component {
 					</div>
 				</section>
 		        
-		        <Featured/>
+		        <Featured handleAddToCart={this.handleAddToCart}/>
 
 		        <NewArrival/>
 

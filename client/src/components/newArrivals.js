@@ -2,7 +2,7 @@ import React from "react"
 
 let dummyObj = [{
     "imgUrl" : "images/tovar/women/new/chubbycat.jpg" ,
-    "product_ID":123,
+    "product_ID":11,
     "product_name": "chubbyCat",
    " product_category": "featured",
     "description": "dummy",
@@ -11,7 +11,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/new/seastuff.png" ,
-    "product_ID":123,
+    "product_ID":12,
     "product_name": "seaStuff",
    " product_category": "featured",
     "description": "dummy",
@@ -20,7 +20,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/new/crush.jpg" ,
-    "product_ID":123,
+    "product_ID":13,
     "product_name": "Crushthing",
    " product_category": "featured",
     "description": "dummy",
@@ -29,7 +29,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/new/poodle.jpg" ,
-    "product_ID":123,
+    "product_ID":14,
     "product_name": "Poodles",
    " product_category": "featured",
     "description": "dummy",
@@ -38,7 +38,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/new/flowerbutt.jpg" ,
-    "product_ID":123,
+    "product_ID":15,
     "product_name": "Poodles",
    " product_category": "featured",
     "description": "dummy",
@@ -47,7 +47,7 @@ let dummyObj = [{
     "sku": "oaiwejf8123"
 },{
     "imgUrl" : "images/tovar/women/new/bubblehead.png" ,
-    "product_ID":123,
+    "product_ID":16,
     "product_name": "Poodles",
    " product_category": "featured",
     "description": "dummy",
