@@ -47,7 +47,7 @@ export default class NavBar extends React.Component {
 				<div className="container clearfix contact" >
 					<ul className="secondary_menu">
 						<li><a href="#" >Log in</a></li>
-						<li><a href="#" >Register</a></li>
+						<li><a href="/signup" >Register</a></li>
 					</ul>
 					
 					<div className="live_chat"><a href="javascript:void(0);" ><i className="fa fa-comment-o"></i> Live chat</a></div>
