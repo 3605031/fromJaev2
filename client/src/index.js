@@ -5,12 +5,16 @@ import './index.css';
 import App from './App';
 import Signup from './components/Signup'
 import registerServiceWorker from './registerServiceWorker';
-import { Router, Route, browserHistory } from 'react-router';
+import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom';
+
+
 
 ReactDOM.render(
-    <Router history={browserHistory}>
-        <Route path="/" component={App}/>
+    <Router>
+    	<div>
+        <Route exact path="/" component={App}/>
         <Route path="/signup" component={Signup}/>
+        </div>
     </Router>
 
 , document.getElementById('root'));

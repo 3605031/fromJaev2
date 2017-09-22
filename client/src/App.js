@@ -7,13 +7,14 @@ import Instagram from "./components/Instagram.js"
 import Footer from "./components/Footer.js"
 import API from "./utils/API.js"
 import './App.css';
+
 	
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			products: [],
-			cart: [] //price, quantity, imgUrl, product_name  			
+			cart: [] //price, quantity, imgUrl, product_name			
 		}
 		
 	}
@@ -66,9 +67,11 @@ class App extends Component {
 	    return (
 		    <div id="page">
 
+
 		        <header>
 		      		<Navbar totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} cart={this.state.cart}/>
 		        </header>
+
 
 				<section id="home" className="padbot0">		
 					<div className="flexslider top_slider">

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import { BrowserRouter as Router, Route, browserHistory, Redirect } from 'react-router-dom';
 
 
 class Signup extends React.Component {
@@ -10,6 +11,7 @@ class Signup extends React.Component {
       email: '',
       password: '',
       passwordConfirmation: '',
+      redirect:false
     }
 
     this.onChange = this.onChange.bind(this);
@@ -29,12 +31,26 @@ class Signup extends React.Component {
         if(this.state.password != this.state.passwordConfirmation){
             alert("PW must match")
         } else {
-            axios.post("/signup",this.state);
+            axios.post("/auth/signup",this.state)
+                .then(  (response) => {
+                    console.log(response.data.success == true);
+                    if(response.data.success == true){
+                        this.setState({redirect:true})
+                    }
+                })
+                    .catch(function (error) {console.log(error)})
         }
     }
   }
 
   render() {
+
+    const redirect = this.state.redirect;
+
+    if(redirect){
+        return <Redirect to = "./"/>;
+    }
+
     return (
       <div className="row">
         <div className="col-md-4 col-md-offset-4">
