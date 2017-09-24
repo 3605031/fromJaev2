@@ -5681,3 +5681,7 @@ header {
 .modal {
 	z-index: 9999 !important;
 }
+
+.username {
+	color: white;
+}

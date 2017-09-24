@@ -21,7 +21,9 @@ export default class NavBar extends React.Component {
       		password: '',
       		passwordConfirmation: '',
       		loginusername: '',
-      		loginpassword: ''
+      		loginpassword: '',
+      		isAuthenticated: false,
+      		token: ''
 		}
 		this.closeSignUp = this.closeSignUp.bind(this);
 		this.closeLogIn  = this.closeLogIn.bind(this);
@@ -29,6 +31,7 @@ export default class NavBar extends React.Component {
 		this.openSignUp  = this.openSignUp.bind(this);
 		this.onChange    = this.onChange.bind(this);
     	this.onSubmit    = this.onSubmit.bind(this);
+    	this.loginSubmit = this.loginSubmit.bind(this);
 	}
 
 	closeSignUp() {
@@ -65,7 +68,7 @@ export default class NavBar extends React.Component {
                     console.log(response.data.success == true);
                     if(response.data.success == true){
                         alert("You signed up successfully!");
-                        this.close();
+                        this.closeSignUp();
                     }
                 })
                     .catch(function (error) {console.log(error)})
@@ -78,9 +81,21 @@ export default class NavBar extends React.Component {
     	if(this.state.loginusername==''||this.state.loginpassword==''){
     		alert("Fill out username and PW")
     	} else {
-    		axios.post("/auth/login",{this.state.loginusername,this.state.loginpassword})
+    		console.log("You're logging in")
+    		var info = {
+    			username : this.state.loginusername,
+    			password : this.state.loginpassword
+    		}
+    		axios.post("/auth/login",info)
     				.then((response) => {
     					console.log("Login response",response)
+    					if(response.data.success==true){
+    						this.setState({isAuthenticated:true});
+                        	this.setState({token:response.data.token})
+                        	this.closeLogIn();
+    					} else {
+    						alert("Your credentials are wrong");
+    					}
     				})
     					.catch((err)=>console.log(err));
     	}
@@ -120,10 +135,18 @@ export default class NavBar extends React.Component {
 				
 		{/*		<!-- CONTAINER -->*/}
 				<div className="container clearfix contact" >
-					<ul className="secondary_menu">
+					
+						{this.state.isAuthenticated?
+						(<ul className="secondary_menu">	
+						<li className="username">Welcome {this.state.loginusername}!</li>
+						<li><button>Sign Out</button></li>
+						</ul>)
+						:
+						(<ul className="secondary_menu">
 						<li><button onClick={this.openLogIn}>Log in</button></li>
 						<li><button onClick={this.openSignUp}>Register</button></li>
-					</ul>
+						</ul>)}
+					
 					
 					<div className="live_chat"><a href="javascript:void(0);" ><i className="fa fa-comment-o"></i> Live chat</a></div>
 					
