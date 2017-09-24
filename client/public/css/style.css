@@ -5677,3 +5677,11 @@ header {
 	font-weight:900;
 	font-size: 14px;
 }
+
+.modal {
+	z-index: 9999 !important;
+}
+
+.username {
+	color: white;
+}
