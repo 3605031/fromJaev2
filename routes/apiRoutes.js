@@ -24,6 +24,11 @@ router.get("/figurines",productsController.figurines)
 
 router.get("/jewelry",productsController.jewelry)
 
+router.get("/sale", productsController.sale)
+
+router.get("/popular", productsController.popular)
+
+router.get("/featured", productsController.featured)
 
 
 
