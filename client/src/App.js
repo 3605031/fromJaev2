@@ -17,6 +17,7 @@ class App extends Component {
 			password: ""
 		}
 		this.handleAddToCart = this.handleAddToCart.bind(this)
+		this.addToCart       = this.addToCart.bind(this)
 	}
 
 
@@ -59,29 +60,31 @@ class App extends Component {
 	}
 
 	addToCart(item){
-		let addItem = item
-		let fullCart = this.state.cart
-		let addPurchaseQuantity = {purchaseQuantity:0}
-		let purchaseThis = Object.assign({}, addItem, addPurchaseQuantity)
-		console.log("previous cart" + JSON.stringify(this.state.cart))
-		fullCart.push(purchaseThis)
-		console.log("full cart" + JSON.stringify(fullCart))
-		let reducedCart = fullCart.reduce(function(acc, curr, currIndex){
-			console.log(acc, curr)
-			console.log(acc.indexOf(curr))
-			if (acc[currIndex]=== curr){
-				curr.purchaseQuantity ++
-				return acc
-			} else {
-				let addPurchaseQuantity = {purchaseQuantity:0}
-				let purchaseThis = Object.assign({}, curr, addPurchaseQuantity)
-				acc.push(purchaseThis)
-				return acc
-			}
-		},[])
-		console.log("reduced cart" + JSON.stringify(reducedCart))
 
-		this.setState((state)=> update(state, {cart:{$set:reducedCart}}))
+		item.quantity = 1;
+		let newCart = this.state.cart
+		let newitem = true;
+
+		console.log("current state cart : " + JSON.stringify(this.state.cart))
+		console.log("item to be added :", item);
+
+		if(newCart.length == 0){
+			newCart.push(item)
+			console.log("New Cart ", newCart)
+			this.setState({cart:newCart})
+		} else {
+			newCart.forEach(function(currentItem,index){
+				if(currentItem.product_name == item.product_name){
+					currentItem.quantity++
+					newitem = false	
+				}
+			})
+			if(newitem){
+				newCart.push(item);
+				this.setState({cart:newCart})
+			}
+		}
+		console.log("new Cart", JSON.stringify(this.state.cart));
 	}
 
 	removeFromCart(event, item){
