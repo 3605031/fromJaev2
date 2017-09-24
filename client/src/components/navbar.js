@@ -1,4 +1,5 @@
 import React from "react"
+
 import NavButton from "./common/navbutton.js";
 import {Link} from "react-router-dom";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
@@ -7,6 +8,7 @@ import NavItemDropdown from "./common/navitemdropdown.js"
 import {Modal,OverlayTrigger,Button} from "react-bootstrap";
 import axios from "axios";
 import { BrowserRouter as Router, Route, browserHistory, Redirect } from 'react-router-dom';
+
 
 export default class NavBar extends React.Component {
 	constructor(props) {
@@ -108,7 +110,8 @@ export default class NavBar extends React.Component {
 		})
 	}
 
-	getcartItems(){
+
+	get cartItems(){
 		if (this.props.cart.length === 0) {
 			return (
 				<li>Your cart is empty. Add items to your cart!</li>
@@ -124,12 +127,14 @@ export default class NavBar extends React.Component {
 
 	}
 
+	numberItemsInCart = () => {
+		return this.props.cart.length
+	}
+
 	render(){
 		return(
 			<div>
 
-
-			
 {/*			<!-- TOP INFO -->*/}
 			<div className="top_info">
 				
@@ -146,8 +151,7 @@ export default class NavBar extends React.Component {
 						<li><button onClick={this.openLogIn}>Log in</button></li>
 						<li><button onClick={this.openSignUp}>Register</button></li>
 						</ul>)}
-					
-					
+						
 					<div className="live_chat"><a href="javascript:void(0);" ><i className="fa fa-comment-o"></i> Live chat</a></div>
 					
 					<div className="phone_top">have a question? <a href="tel:1 800 888 2828" >1 800 888 2828</a></div>
@@ -252,7 +256,7 @@ export default class NavBar extends React.Component {
 					<div className="top_search_form">
 						<a className="top_search_btn" href="javascript:void(0);" ><i className="fa fa-search"></i></a>
 						<form method="get" action="#">
-							<input type="text" name="search" value="Search"/>
+							<input type="text" name="search" placeholder="Search"/>
 						</form>
 					</div>{/*<!-- SEARCH FORM -->*/}	
 					
