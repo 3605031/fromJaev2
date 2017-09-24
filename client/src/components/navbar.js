@@ -50,7 +50,7 @@ export default class NavBar extends React.Component {
 		{/*		<!-- CONTAINER -->*/}
 				<div className="container clearfix contact" >
 					<ul className="secondary_menu">
-						<li><a href="#" onClick={()=>this.loginModal()}>Log in</a></li>
+						<li><a href="#">Log in</a></li>
 
 						<li><a href="#" >Register</a></li>
 					</ul>
@@ -116,11 +116,11 @@ export default class NavBar extends React.Component {
 	
 
 					<Nav className = "navmenu center">
-						<NavButton propClass = "first active sub-menu" url="#" name="Home" />
-						<NavButton propClass = "sub-menu" url="#" name="Figurine" />
-						<NavButton propClass = "sub-menu" url="#" name="Stickers" />
-						<NavButton propClass = "sub-menu" url="#" name="Jewelry" />
-						<NavButton propClass = "last sub-menu" url="#" name="Sale" />
+						<NavButton propClass = "first active sub-menu" url={this.props.toggleHome} name="Home" />
+						<NavButton propClass = "sub-menu" url={this.props.toggleFigurines} name="Figurine" />
+						<NavButton propClass = "sub-menu" url={this.props.toggleStickers} name="Stickers" />
+						<NavButton propClass = "sub-menu" url={this.props.toggleJewelry} name="Jewelry" />
+						<NavButton propClass = "last sub-menu" url={this.props.toggleSale} name="Sale" />
 					</Nav>
 				</div>{/*<!-- //MENU BLOCK -->*/}
 			</div> {/*<!-- //CONTAINER -->*/}

@@ -3,6 +3,7 @@ import update from "immutability-helper"
 import Navbar from "./components/navbar.js"
 import Featured from "./components/featuredProducts.js"
 import NewArrival from "./components/newArrivals.js"
+import Stickers from "./components/stickers.js"
 import Instagram from "./components/Instagram.js"
 import Footer from "./components/Footer.js"
 import API from "./utils/API.js"
@@ -14,7 +15,12 @@ class App extends Component {
 			products: [],
 			cart: [], 			
 			username: "",
-			password: ""
+			password: "",
+			showSale: false,
+			showStickers: false,
+			showJewelery: false,
+			showFigurines: false,
+			showFeaturedAndNewArrivals: true
 		}
 		this.handleAddToCart = this.handleAddToCart.bind(this)
 	}
@@ -101,7 +107,6 @@ class App extends Component {
     }
 
 
-
   	render() {
 	    return (
 		    <div id="page">
@@ -121,7 +126,7 @@ class App extends Component {
 		        
 		        <Featured handleAddToCart={this.handleAddToCart}/>
 
-		        <NewArrival/>
+		        <Stickers handleAddToCart={this.handleAddToCart}/>
 
 		        <hr className="container"/>
 
