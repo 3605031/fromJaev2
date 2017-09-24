@@ -8,11 +8,13 @@ import Instagram from "./components/Instagram.js"
 import Footer from "./components/Footer.js"
 import API from "./utils/API.js"
 import './App.css';
+
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			products: [],
+<<<<<<< HEAD
 			cart: [], 			
 			username: "",
 			password: "",
@@ -21,8 +23,13 @@ class App extends Component {
 			showJewelery: false,
 			showFigurines: false,
 			showFeaturedAndNewArrivals: true
+=======
+
+			cart: [] //price, quantity, imgUrl, product_name			
+>>>>>>> 4827f0756b283f9b54c24154ff9f291b477a3e90
 		}
 		this.handleAddToCart = this.handleAddToCart.bind(this)
+		this.addToCart       = this.addToCart.bind(this)
 	}
 
 
@@ -65,29 +72,31 @@ class App extends Component {
 	}
 
 	addToCart(item){
-		let addItem = item
-		let fullCart = this.state.cart
-		let addPurchaseQuantity = {purchaseQuantity:0}
-		let purchaseThis = Object.assign({}, addItem, addPurchaseQuantity)
-		console.log("previous cart" + JSON.stringify(this.state.cart))
-		fullCart.push(purchaseThis)
-		console.log("full cart" + JSON.stringify(fullCart))
-		let reducedCart = fullCart.reduce(function(acc, curr, currIndex){
-			console.log(acc, curr)
-			console.log(acc.indexOf(curr))
-			if (acc[currIndex]=== curr){
-				curr.purchaseQuantity ++
-				return acc
-			} else {
-				let addPurchaseQuantity = {purchaseQuantity:0}
-				let purchaseThis = Object.assign({}, curr, addPurchaseQuantity)
-				acc.push(purchaseThis)
-				return acc
-			}
-		},[])
-		console.log("reduced cart" + JSON.stringify(reducedCart))
 
-		this.setState((state)=> update(state, {cart:{$set:reducedCart}}))
+		item.quantity = 1;
+		let newCart = this.state.cart
+		let newitem = true;
+
+		console.log("current state cart : " + JSON.stringify(this.state.cart))
+		console.log("item to be added :", item);
+
+		if(newCart.length == 0){
+			newCart.push(item)
+			console.log("New Cart ", newCart)
+			this.setState({cart:newCart})
+		} else {
+			newCart.forEach(function(currentItem,index){
+				if(currentItem.product_name == item.product_name){
+					currentItem.quantity++
+					newitem = false	
+				}
+			})
+			if(newitem){
+				newCart.push(item);
+				this.setState({cart:newCart})
+			}
+		}
+		console.log("new Cart", JSON.stringify(this.state.cart));
 	}
 
 	removeFromCart(event, item){
@@ -111,9 +120,11 @@ class App extends Component {
 	    return (
 		    <div id="page">
 
+
 		        <header>
 		      		<Navbar totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} cart={this.state.cart}/>
 		        </header>
+
 
 				<section id="home" className="padbot0">		
 					<div className="flexslider top_slider">
