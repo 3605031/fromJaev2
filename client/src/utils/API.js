@@ -13,5 +13,15 @@ export default {
   },
   getJewelry : function(){
     return axios.get("/api/jewelry")
+  },
+  getSale : function(){
+    return axios.get("/api/sale")
+  },
+  getPopular: function(){
+    return axios.get("/api/popular")
+  },
+  getFeatured: function(){
+    return axios.get("/api/featured")
   }
+
 };

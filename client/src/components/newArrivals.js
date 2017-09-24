@@ -1,4 +1,5 @@
 import React from "react"
+import API from "../utils/API.js"
 
 let dummyObj = [{
     "imgUrl" : "images/tovar/women/new/chubbycat.jpg" ,
@@ -62,7 +63,26 @@ let dummyObj = [{
 export default class NewArrivals extends React.Component {
 	constructor(props) {
 		super(props);
-		
+		this.state = {
+			products: []
+		}
+	}
+
+	displayNew = () =>{
+		API.getPopular()
+			.then(res=>{
+				console.log(res)
+				this.setState((prevState)=>{
+					console.log(prevState)
+					return {
+						products: res.data
+					}
+				})
+			})
+			.then(()=>{
+				console.log(this.state)
+			})
+			.catch(err=> console.log(err))
 	}
 
 	renderNavigation = () =>{
@@ -83,7 +103,7 @@ export default class NewArrivals extends React.Component {
 			//eventually, dummyobj will be replaced with an API call to retrieve the items from database (items to be presorted server side)
 			dummyObj.map(function(toBeReplaced){
 				return(
-					<li>
+					<li key={toBeReplaced.product_ID}>
 						{/*<!-- TOVAR -->*/}
 						<div className="tovar_item_new">
 							<div className="tovar_img">

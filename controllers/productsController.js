@@ -37,5 +37,29 @@ module.exports = {
       }).catch(function(err) {
         res.json(err);
       });
+  },
+  sale: function(req, res){
+    Product.find({sale: true})
+      .then(function(doc){
+        res.json(doc)
+      }).catch(function(err){
+        res.json(err)
+      })
+  },
+  popular: function(req, res){
+    Product.find({popular: true})
+      .then(function(doc){
+        res.json(doc)
+      }).catch(function(err){
+        res.json(err)
+      })
+  },
+  featured: function(req, res){
+    Product.find({featured: true})
+      .then(function(doc){
+        res.json(doc)
+      }).catch(function(err){
+        res.json(err)
+      })
   }
 };

@@ -1,8 +1,9 @@
 import React from "react"
 import NavButton from "./common/navbutton.js"
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input} from 'reactstrap';
 import {Toast} from "react-materialize"
 import NavItemDropdown from "./common/navitemdropdown.js"
+import API from "../utils/API.js"
 
 export default class NavBar extends React.Component {
 	constructor(props) {
@@ -19,7 +20,8 @@ export default class NavBar extends React.Component {
 		})
 	}
 
-	getcartItems(){
+
+	get cartItems(){
 		if (this.props.cart.length === 0) {
 			return (
 				<li>Your cart is empty. Add items to your cart!</li>
@@ -35,18 +37,21 @@ export default class NavBar extends React.Component {
 
 	}
 
+	numberItemsInCart = () => {
+		return this.props.cart.length
+	}
+
 	render(){
 		return(
 			<div>
-
-			
 {/*			<!-- TOP INFO -->*/}
 			<div className="top_info">
 				
 		{/*		<!-- CONTAINER -->*/}
 				<div className="container clearfix contact" >
 					<ul className="secondary_menu">
-						<li><a href="#" >Log in</a></li>
+						<li><a href="#" onClick={()=>this.loginModal()}>Log in</a></li>
+
 						<li><a href="#" >Register</a></li>
 					</ul>
 					
@@ -73,7 +78,7 @@ export default class NavBar extends React.Component {
 					<div className="top_search_form">
 						<a className="top_search_btn" href="javascript:void(0);" ><i className="fa fa-search"></i></a>
 						<form method="get" action="#">
-							<input type="text" name="search" value="Search"/>
+							<input type="text" name="search" placeholder="Search"/>
 						</form>
 					</div>{/*<!-- SEARCH FORM -->*/}	
 					
