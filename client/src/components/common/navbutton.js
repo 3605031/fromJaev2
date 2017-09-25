@@ -11,7 +11,7 @@ export default class NavButton extends React.Component {
 	render(){
 		return(
 			<NavItem className = {this.props.propClass}>
-				<NavLink href ={this.props.url}>{this.props.name}</NavLink>
+				<NavLink href ="#" onClick = {this.props.url}>{this.props.name}</NavLink>
 			</NavItem>
 			)
 	}

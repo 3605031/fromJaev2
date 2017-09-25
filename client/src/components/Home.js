@@ -30,7 +30,7 @@ class Home extends Component {
 
 
 		        <header>
-		      		<Navbar totalPrice={this.props.totalPrice} totalQuantity={this.props.totalQuantity} cart={this.props.cart}/>
+		      		<Navbar totalPrice={this.props.totalPrice} totalQuantity={this.props.totalQuantity} cart={this.props.cart} cartItems={this.props.cartItems}/>
 		        </header>
 
 
@@ -43,7 +43,7 @@ class Home extends Component {
 					</div>
 				</section>
 		        
-		        <Featured handleAddToCart={this.props.handleAddToCart}/>
+		        <Featured handleAddToCart={this.props.handleAddToCart} products={this.props.products}/>
 
 		        <NewArrival/>
 

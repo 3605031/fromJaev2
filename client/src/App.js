@@ -5,17 +5,20 @@ import Checkout from "./components/Checkout.js"
 import API from "./utils/API.js"
 import './App.css';
 import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom';
+import NavItemDropdown from "./components/common/navitemdropdown.js"
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			products: [],
-
 			cart: [] //price, quantity, imgUrl, product_name			
 		}
 		this.handleAddToCart = this.handleAddToCart.bind(this)
 		this.addToCart       = this.addToCart.bind(this)
+    	this.cartItems = this.cartItems.bind(this)
+    	this.totalPrice = this.totalPrice.bind(this)
+
 	}
 
 
@@ -28,29 +31,35 @@ class App extends Component {
 	getAll(){
 		API.searchAll()
 			.then(res =>{
-				console.log(res)
 				this.setState((prevState)=>{
-					console.log(prevState)
 					return {
 						products: res.data 
 					}
 				})
 			})
 			.then(()=>{
-				console.log(this.state)
 			})
 			.catch(err => console.log(err))
 	}
 
 
-	get totalPrice(){
-		if (this.state.cart.length ===0){
-			return 0
+	cartItems(){
+		if (this.state.cart.length === 0) {
+			return (
+				<li>Your cart is empty. Add items to your cart!</li>
+				)
 		} else {
-			let sumCart = this.state.cart
-			let sum = sumCart.reduce((a,b)=>{return a.price+b.price},0)
-			return sum
+			return this.state.cart.map((item)=>{
+				return(
+					<NavItemDropdown product_name = {item.product_name} imgUrl = {item.imgUrl} quantity = {item.purchaseQuantity} price = {item.price} product_ID={item.product_ID}/>
+					)
+				})
 		}
+
+	}
+
+	totalPrice(){
+		return (this.state.cart.length === 0) ? 0 : this.state.cart.reduce((a,b)=>{return a + (b.price*b.purchaseQuantity)},0)
 	}
 
 	get totalQuantity(){
@@ -59,7 +68,6 @@ class App extends Component {
 
 	addToCart(item){
 
-		item.quantity = 1;
 		let newCart = this.state.cart
 		let newitem = true;
 
@@ -67,17 +75,20 @@ class App extends Component {
 		console.log("item to be added :", item);
 
 		if(newCart.length == 0){
+			item.purchaseQuantity = 1;
 			newCart.push(item)
 			console.log("New Cart ", newCart)
 			this.setState({cart:newCart})
 		} else {
 			newCart.forEach(function(currentItem,index){
 				if(currentItem.product_name == item.product_name){
-					currentItem.quantity++
+					currentItem.purchaseQuantity++
 					newitem = false	
 				}
 			})
+			this.setState({cart:newCart});
 			if(newitem){
+				item.purchaseQuantity = 1
 				newCart.push(item);
 				this.setState({cart:newCart})
 			}
@@ -96,18 +107,29 @@ class App extends Component {
 
 
     handleAddToCart(event, addItem){
-        console.log("add to cart button works")
+
+    	let newProducts = this.state.products;
         let newCart = this.state.products.filter(item=>item.product_ID === addItem)
+        let test = newCart
+
+        let index = this.state.products.indexOf(test[0]);
+        console.log("index of item: ",index)
+        console.log("newProducts quantity",newProducts[index].quantity)
+        newProducts[index].quantity--
+        console.log("After subtracting ", newProducts[index].quantity)
+   		this.setState({
+   			products : newProducts
+   		})
+
         this.addToCart(newCart[0])
     }
-
 
 
   	render() {
 	    return (
 		    <Router>
     			<div>
-	        		<Route exact path="/" render={()=><Home cart={this.state.cart} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
+	        		<Route exact path="/" render={()=><Home cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
 	        		<Route exact path="/checkout" component={Checkout}/>
         		</div>
     		</Router>
