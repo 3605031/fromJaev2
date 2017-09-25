@@ -11,13 +11,6 @@ import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom
 
 
 ReactDOM.render(
-    <Router>
-    	<div>
-        <Route exact path="/" component={App}/>
-        <Route path="/signup" component={Signup}/>
-        <Route exact path="/checkout" component={Checkout}/>
-        </div>
-    </Router>
-
+    <App/>
 , document.getElementById('root'));
 registerServiceWorker();
