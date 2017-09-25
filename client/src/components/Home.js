@@ -43,7 +43,7 @@ class Home extends Component {
 					</div>
 				</section>
 		        
-		        <Featured handleAddToCart={this.props.handleAddToCart}/>
+		        <Featured handleAddToCart={this.props.handleAddToCart} products={this.props.products}/>
 
 		        <NewArrival/>
 

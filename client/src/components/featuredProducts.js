@@ -8,15 +8,12 @@ export default class FeaturedProducts extends React.Component {
 		super(props);
 /*        this.props.handleAddToCart = this.handleAddToCart.bind(this)*/
         this.renderItems = this.renderItems.bind(this)
-        this.state = {
-            products: []
-        }
 	}
     componentDidMount() {
-        this.displayFeatured()
+        this.renderItems()
     }
 
-    displayFeatured = () =>{
+/*    displayFeatured = () =>{
         API.getFeatured()
             .then(res=>{
                 console.log(res)
@@ -31,16 +28,16 @@ export default class FeaturedProducts extends React.Component {
                 console.log(this.state)
             })
             .catch(err=> console.log(err))
-    }
+    }*/
 
 
 	renderItems(){
-
+		let featuredItems = this.props.products.filter(item=>item.featured)
 		//eventully, dummyobj will be replaced with an API call to retrieve the items from database 
-		return this.state.products.map((toBeReplaced, index)=>{
+		return featuredItems.map((toBeReplaced, index)=>{
 
 			return(	
-                <Item key={toBeReplaced.product_ID} product_ID={toBeReplaced.product_ID} imgUrl={toBeReplaced.imgUrl} handleAddToCart={this.props.handleAddToCart} product_name={toBeReplaced.product_name} price={toBeReplaced.price} quantity={toBeReplaced.quantity} featuredIndex={index}/>
+                <Item key={toBeReplaced._id} product_ID={toBeReplaced.product_ID} imgUrl={toBeReplaced.imgUrl} handleAddToCart={this.props.handleAddToCart} product_name={toBeReplaced.product_name} price={toBeReplaced.price} quantity={toBeReplaced.quantity} featuredIndex={index}/>
 				)
 		})
 	}
