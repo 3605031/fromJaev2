@@ -111,22 +111,6 @@ export default class NavBar extends React.Component {
 	}
 
 
-	get cartItems(){
-		if (this.props.cart.length === 0) {
-			return (
-				<li>Your cart is empty. Add items to your cart!</li>
-				)
-		} else {
-			let cart = this.props.cart
-			cart.map(function(item){
-			return(
-				<NavItemDropdown item_name = {item.item_name} img_url = {item.img_url} quantity = {item.quantity} price = {item.price}/>
-				)
-			})
-		}
-
-	}
-
 	numberItemsInCart = () => {
 		return this.props.cart.length
 	}
@@ -266,10 +250,10 @@ export default class NavBar extends React.Component {
 						<a className="shopping_bag_btn" href="javascript:void(0);" ><i className="fa fa-shopping-cart"></i><p>shopping bag</p><span id="bagquantity">{this.props.totalQuantity}</span></a>
 						<div className="cart">
 							<ul className="cart-items cart-main">
-								{this.cartItems}
+								{this.props.cartItems()}
 							</ul>
 							<div className="cart_total">
-								<div className="clearfix"><span className="cart_subtotal">bag subtotal: <b className="bagtotal">{this.props.totalPrice}</b></span></div>
+								<div className="clearfix"><span className="cart_subtotal">bag subtotal: <b className="bagtotal">${this.props.totalPrice()}</b></span></div>
 								<a className="btn active" href="checkout.html">Checkout</a>
 							</div>
 						</div>

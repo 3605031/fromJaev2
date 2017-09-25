@@ -40,7 +40,7 @@ export default class FeaturedProducts extends React.Component {
 		return this.state.products.map((toBeReplaced, index)=>{
 
 			return(	
-                <Item product_ID={toBeReplaced.product_ID} imgUrl={toBeReplaced.imgUrl} handleAddToCart={this.props.handleAddToCart} product_name={toBeReplaced.product_name} price={toBeReplaced.price} quantity={toBeReplaced.quantity} featuredIndex={index}/>
+                <Item key={toBeReplaced.product_ID} product_ID={toBeReplaced.product_ID} imgUrl={toBeReplaced.imgUrl} handleAddToCart={this.props.handleAddToCart} product_name={toBeReplaced.product_name} price={toBeReplaced.price} quantity={toBeReplaced.quantity} featuredIndex={index}/>
 				)
 		})
 	}

@@ -5,6 +5,7 @@ import Checkout from "./components/Checkout.js"
 import API from "./utils/API.js"
 import './App.css';
 import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom';
+import NavItemDropdown from "./components/common/navitemdropdown.js"
 
 class App extends Component {
 	constructor(props) {
@@ -15,6 +16,9 @@ class App extends Component {
 		}
 		this.handleAddToCart = this.handleAddToCart.bind(this)
 		this.addToCart       = this.addToCart.bind(this)
+    	this.cartItems = this.cartItems.bind(this)
+    	this.totalPrice = this.totalPrice.bind(this)
+
 	}
 
 
@@ -42,14 +46,23 @@ class App extends Component {
 	}
 
 
-	get totalPrice(){
-		if (this.state.cart.length ===0){
-			return 0
+	cartItems(){
+		if (this.state.cart.length === 0) {
+			return (
+				<li>Your cart is empty. Add items to your cart!</li>
+				)
 		} else {
-			let sumCart = this.state.cart
-			let sum = sumCart.reduce((a,b)=>{return a.price+b.price},0)
-			return sum
+			return this.state.cart.map((item)=>{
+				return(
+					<NavItemDropdown product_name = {item.product_name} imgUrl = {item.imgUrl} quantity = {item.quantity} price = {item.price} product_ID={item.product_ID}/>
+					)
+				})
 		}
+
+	}
+
+	totalPrice(){
+		return (this.state.cart.length === 0) ? 0 : this.state.cart.reduce((a,b)=>{return a + (b.price*b.quantity)},0)
 	}
 
 	get totalQuantity(){
@@ -58,7 +71,6 @@ class App extends Component {
 
 	addToCart(item){
 
-		item.quantity = 1;
 		let newCart = this.state.cart
 		let newitem = true;
 
@@ -66,6 +78,7 @@ class App extends Component {
 		console.log("item to be added :", item);
 
 		if(newCart.length == 0){
+			item.quantity = 1;
 			newCart.push(item)
 			console.log("New Cart ", newCart)
 			this.setState({cart:newCart})
@@ -76,7 +89,9 @@ class App extends Component {
 					newitem = false	
 				}
 			})
+			this.setState({cart:newCart});
 			if(newitem){
+				item.quantity = 1
 				newCart.push(item);
 				this.setState({cart:newCart})
 			}
@@ -105,7 +120,7 @@ class App extends Component {
 	    return (
 		    <Router>
     			<div>
-	        		<Route exact path="/" render={()=><Home cart={this.state.cart} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
+	        		<Route exact path="/" render={()=><Home cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
 	        		<Route exact path="/checkout" component={Checkout}/>
         		</div>
     		</Router>
