@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import update from "immutability-helper"
-import Navbar from "./components/navbar.js"
-import Featured from "./components/featuredProducts.js"
-import NewArrival from "./components/newArrivals.js"
-import Instagram from "./components/Instagram.js"
-import Footer from "./components/Footer.js"
+import Home from "./components/Home.js"
+import Checkout from "./components/Checkout.js"
 import API from "./utils/API.js"
 import './App.css';
+import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom';
 
 class App extends Component {
 	constructor(props) {
@@ -107,33 +105,12 @@ class App extends Component {
 
   	render() {
 	    return (
-		    <div id="page">
-
-
-		        <header>
-		      		<Navbar totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} cart={this.state.cart}/>
-		        </header>
-
-
-				<section id="home" className="padbot0">		
-					<div className="flexslider top_slider">
-						<ul className="slides">
-							<li className="slide1">	
-							</li>
-						</ul>
-					</div>
-				</section>
-		        
-		        <Featured handleAddToCart={this.handleAddToCart}/>
-
-		        <NewArrival/>
-
-		        <hr className="container"/>
-
-		        <Instagram/>
-
-		        <Footer/>
-		    </div>  
+		    <Router>
+    			<div>
+	        		<Route exact path="/" render={()=><Home cart={this.state.cart} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
+	        		<Route exact path="/checkout" component={Checkout}/>
+        		</div>
+    		</Router>
 	    );
   }
 }
