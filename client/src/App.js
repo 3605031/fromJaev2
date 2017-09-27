@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import update from "immutability-helper"
 import Home from "./components/Home.js"
 import Checkout from "./components/Checkout.js"
+import UserForm from "./components/userinformationpage.js"
 import API from "./utils/API.js"
 import './App.css';
 import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom';
@@ -125,7 +126,8 @@ class App extends Component {
 		    <Router>
     			<div>
 	        		<Route exact path="/" render={()=><Home cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
-	        		<Route exact path="/checkout" render={()=><Checkout cart={this.state.cart} totalPrice={this.totalPrice}/> }/>
+	        		<Route exact path="/checkout" render={()=><Checkout cart={this.state.cart} totalPrice={this.totalPrice}/>}/>
+	        		<Route exact path = "/userinfo" render={()=><UserForm totalPrice = {this.totalPrice}/>}/>
         		</div>
     		</Router>
 	    );

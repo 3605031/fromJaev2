@@ -6,6 +6,9 @@ var router = new express.Router();
 // Use the apiRoutes module for any routes starting with "/api"
 router.use("/api", apiRoutes);
 router.use("/auth", authRoutes);
+router.post("/pay", function(req, res){
+	console.log(req)
+})
 // Otherwise send all other requests the index.html page
 // React router will handle routing withing the app
 router.get("*", function(req, res) {
