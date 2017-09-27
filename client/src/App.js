@@ -130,7 +130,7 @@ class App extends Component {
 		    <Router>
     			<div>
 	        		<Route exact path="/" render={()=><Home cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
-	        		<Route exact path="/checkout" component={Checkout}/>
+	        		<Route exact path="/checkout" render={()=><Checkout cart={this.state.cart}/>}/>
         		</div>
     		</Router>
 	    );

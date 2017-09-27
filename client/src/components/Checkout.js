@@ -120,7 +120,29 @@ class Checkout extends React.Component {
                                     <td className="product-subtotal">$96.00</td>
 
                                     <td className="product-remove"><a href="javascript:void(0);" ><span>Delete</span> <i>X</i></a></td>
-                                </tr>                          
+                                </tr>
+                                <tr className="cart_item">
+                                    <td className="product-thumbnail"><a href="product-page.html" ><img src="images/tovar/women/2.jpg" width="100px" alt="" /></a></td>
+                                    <td className="product-name">
+                                        <a href="product-page.html">Merino tippi sweater in geometric stripe</a>
+                                        {/*<ul className="variation">
+                                            <li className="variation-Color">Color: <span>Brown</span></li>
+                                            <li className="variation-Size">Size: <span>XS</span></li>
+                                        </ul>*/}
+                                    </td>
+
+                                    <td className="product-price">$96.00</td>
+
+                                    <td className="product-quantity">
+                                        <select className="basic">
+                                            <option value="">1</option>
+                                        </select>
+                                    </td>
+                                    
+                                    <td className="product-subtotal">$96.00</td>
+
+                                    <td className="product-remove"><a href="javascript:void(0);" ><span>Delete</span> <i>X</i></a></td>
+                                </tr>                           
                             </tbody>
                         </table>
                     </div>
