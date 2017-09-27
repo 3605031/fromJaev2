@@ -71,13 +71,9 @@ class App extends Component {
 		let newCart = this.state.cart
 		let newitem = true;
 
-		console.log("current state cart : " + JSON.stringify(this.state.cart))
-		console.log("item to be added :", item);
-
 		if(newCart.length == 0){
 			item.purchaseQuantity = 1;
 			newCart.push(item)
-			console.log("New Cart ", newCart)
 			this.setState({cart:newCart})
 		} else {
 			newCart.forEach(function(currentItem,index){
@@ -93,7 +89,6 @@ class App extends Component {
 				this.setState({cart:newCart})
 			}
 		}
-		console.log("new Cart", JSON.stringify(this.state.cart));
 	}
 
 	removeFromCart(event, item){
@@ -122,6 +117,20 @@ class App extends Component {
    		})
 
         this.addToCart(newCart[0])
+        let currentProducts = this.state.products
+        console.log("index is " , currentProducts.indexOf(newCart[0]))
+        let alterIndex = new Promise((resolve, reject)=>{resolve(currentProducts.indexOf(newCart[0]))})
+        alterIndex.then((index)=>{
+        	let changeThisProduct = index
+        	console.log(index, changeThisProduct)
+	        let updatedProducts = update(currentProducts, {[changeThisProduct]: {quantity:{$apply:(num)=>{return num - 1 }}}})
+       	    console.log(currentProducts, updatedProducts)
+       	    this.setState({
+       	    	products: updatedProducts
+       	    })
+        })
+
+
     }
 
 

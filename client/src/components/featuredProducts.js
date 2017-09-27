@@ -8,9 +8,6 @@ export default class FeaturedProducts extends React.Component {
 		super(props);
 /*        this.props.handleAddToCart = this.handleAddToCart.bind(this)*/
         this.renderItems = this.renderItems.bind(this)
-        this.state = {
-            products: []
-        }
 	}
     componentDidMount() {
         

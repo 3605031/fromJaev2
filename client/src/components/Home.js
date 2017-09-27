@@ -45,7 +45,7 @@ class Home extends Component {
 		        
 		        <Featured handleAddToCart={this.props.handleAddToCart} products={this.props.products}/>
 
-		        <NewArrival/>
+		        <NewArrival handleAddToCart={this.props.handleAddToCart} products={this.props.products}/>
 
 		        <hr className="container"/>
 
