@@ -7,6 +7,10 @@ export default class NewArrivals extends React.Component {
 
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		console.log('newArrivals componentDidUpdate method')
+	}
+
 
 	renderNavigation = () =>{
 		let newproducts = this.props.products.filter(item=>item.new)
