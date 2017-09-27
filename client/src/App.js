@@ -31,16 +31,13 @@ class App extends Component {
 	getAll(){
 		API.searchAll()
 			.then(res =>{
-				console.log(res)
 				this.setState((prevState)=>{
-					console.log(prevState)
 					return {
 						products: res.data 
 					}
 				})
 			})
 			.then(()=>{
-				console.log(this.state)
 			})
 			.catch(err => console.log(err))
 	}
@@ -54,7 +51,7 @@ class App extends Component {
 		} else {
 			return this.state.cart.map((item)=>{
 				return(
-					<NavItemDropdown product_name = {item.product_name} imgUrl = {item.imgUrl} quantity = {item.quantity} price = {item.price} product_ID={item.product_ID}/>
+					<NavItemDropdown product_name = {item.product_name} imgUrl = {item.imgUrl} quantity = {item.purchaseQuantity} price = {item.price} product_ID={item.product_ID}/>
 					)
 				})
 		}
@@ -62,7 +59,7 @@ class App extends Component {
 	}
 
 	totalPrice(){
-		return (this.state.cart.length === 0) ? 0 : this.state.cart.reduce((a,b)=>{return a + (b.price*b.quantity)},0)
+		return (this.state.cart.length === 0) ? 0 : this.state.cart.reduce((a,b)=>{return a + (b.price*b.purchaseQuantity)},0)
 	}
 
 	get totalQuantity(){
@@ -75,19 +72,19 @@ class App extends Component {
 		let newitem = true;
 
 		if(newCart.length == 0){
-			item.quantity = 1;
+			item.purchaseQuantity = 1;
 			newCart.push(item)
 			this.setState({cart:newCart})
 		} else {
 			newCart.forEach(function(currentItem,index){
 				if(currentItem.product_name == item.product_name){
-					currentItem.quantity++
+					currentItem.purchaseQuantity++
 					newitem = false	
 				}
 			})
 			this.setState({cart:newCart});
 			if(newitem){
-				item.quantity = 1
+				item.purchaseQuantity = 1
 				newCart.push(item);
 				this.setState({cart:newCart})
 			}
@@ -105,8 +102,20 @@ class App extends Component {
 
 
     handleAddToCart(event, addItem){
-        console.log("add to cart button works")
+
+    	let newProducts = this.state.products;
         let newCart = this.state.products.filter(item=>item.product_ID === addItem)
+        let test = newCart
+
+        let index = this.state.products.indexOf(test[0]);
+        console.log("index of item: ",index)
+        console.log("newProducts quantity",newProducts[index].quantity)
+        newProducts[index].quantity--
+        console.log("After subtracting ", newProducts[index].quantity)
+   		this.setState({
+   			products : newProducts
+   		})
+
         this.addToCart(newCart[0])
         let currentProducts = this.state.products
         console.log("index is " , currentProducts.indexOf(newCart[0]))

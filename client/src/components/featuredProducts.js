@@ -10,31 +10,32 @@ export default class FeaturedProducts extends React.Component {
         this.renderItems = this.renderItems.bind(this)
 	}
     componentDidMount() {
-        this.renderItems()
+        
     }
 
-/*    displayFeatured = () =>{
-        API.getFeatured()
-            .then(res=>{
-                console.log(res)
-                this.setState((prevState)=>{
-                    console.log(prevState)
-                    return {
-                        products: res.data
-                    }
-                }, this.renderItems)
-            })
-            .then(()=>{
-                console.log(this.state)
-            })
-            .catch(err=> console.log(err))
-    }*/
+    // displayFeatured = () =>{
+    //     API.getFeatured()
+    //         .then(res=>{
+    //             console.log(res)
+    //             this.setState((prevState)=>{
+    //                 console.log(prevState)
+    //                 return {
+    //                     products: res.data
+    //                 }
+    //             }, this.renderItems)
+    //         })
+    //         .then(()=>{
+    //             console.log(this.state)
+    //         })
+    //         .catch(err=> console.log(err))
+    // }
 
 
 	renderItems(){
-		let featuredItems = this.props.products.filter(item=>item.featured)
+
+		let newproducts = this.props.products.filter((item)=>item.featured)
 		//eventully, dummyobj will be replaced with an API call to retrieve the items from database 
-		return featuredItems.map((toBeReplaced, index)=>{
+		return newproducts.map((toBeReplaced, index)=>{
 
 			return(	
                 <Item key={toBeReplaced._id} product_ID={toBeReplaced.product_ID} imgUrl={toBeReplaced.imgUrl} handleAddToCart={this.props.handleAddToCart} product_name={toBeReplaced.product_name} price={toBeReplaced.price} quantity={toBeReplaced.quantity} featuredIndex={index}/>
