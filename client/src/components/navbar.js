@@ -254,7 +254,7 @@ export default class NavBar extends React.Component {
 							</ul>
 							<div className="cart_total">
 								<div className="clearfix"><span className="cart_subtotal">bag subtotal: <b className="bagtotal">${this.props.totalPrice()}</b></span></div>
-								<a className="btn active" href="checkout.html">Checkout</a>
+								<Link to="/checkout" className="btn active">Checkout</Link>
 							</div>
 						</div>
 					</div>{/*<!-- //SHOPPING BAG -->*/}

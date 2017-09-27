@@ -20,7 +20,29 @@ class Home extends Component {
 
 	componentDidMount(){
 		console.log(this.props.cart)
+		if ( $ && $.flexslider ) {
+			$('.flexslider.top_slider').flexslider({
+				animation: "fade",
+				controlNav: true,
+				directionNav: false,
+				prevText: "",
+				nextText: ""
+			});
+		}
+		if ( $ ) {
+			$('.some-class').on('click', function(e) {
+				console.log('clicked something', e);
+			});
+		}
+		if ( $ && window.tovarfotoHeight ) {
+    		console.log('calling tovarfotoHeight')
+        	tovarfotoHeight();
+    	}
 	}	
+
+	componentDidUpdate(prevProps, prevState) {
+		console.log('Home component, componentDidUpdate');
+	}
 
 
 
