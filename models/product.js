@@ -15,6 +15,7 @@ var productSchema = new Schema({
     featured : {type:Boolean},
     popular : {type:Boolean},
     sale: {type:Boolean},
+    new: {type:Boolean}
 });
 
 // Create the product model with the productSchema

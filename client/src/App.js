@@ -51,7 +51,7 @@ class App extends Component {
 		} else {
 			return this.state.cart.map((item)=>{
 				return(
-					<NavItemDropdown product_name = {item.product_name} imgUrl = {item.imgUrl} quantity = {item.purchaseQuantity} price = {item.price} product_ID={item.product_ID}/>
+					<NavItemDropdown product_name = {item.product_name} imgUrl = {item.imgUrl} quantity = {item.purchaseQuantity} price = {item.price} key={item._id}/>
 					)
 				})
 		}
@@ -71,13 +71,9 @@ class App extends Component {
 		let newCart = this.state.cart
 		let newitem = true;
 
-		console.log("current state cart : " + JSON.stringify(this.state.cart))
-		console.log("item to be added :", item);
-
 		if(newCart.length == 0){
 			item.purchaseQuantity = 1;
 			newCart.push(item)
-			console.log("New Cart ", newCart)
 			this.setState({cart:newCart})
 		} else {
 			newCart.forEach(function(currentItem,index){
@@ -93,7 +89,6 @@ class App extends Component {
 				this.setState({cart:newCart})
 			}
 		}
-		console.log("new Cart", JSON.stringify(this.state.cart));
 	}
 
 	removeFromCart(event, item){
@@ -108,11 +103,11 @@ class App extends Component {
 
     handleAddToCart(event, addItem){
 
-    	let newProducts = this.state.products;
+		let newProducts = this.state.products;
         let newCart = this.state.products.filter(item=>item.product_ID === addItem)
         let test = newCart
-
         let index = this.state.products.indexOf(test[0]);
+
         console.log("index of item: ",index)
         console.log("newProducts quantity",newProducts[index].quantity)
         newProducts[index].quantity--
@@ -130,7 +125,7 @@ class App extends Component {
 		    <Router>
     			<div>
 	        		<Route exact path="/" render={()=><Home cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
-	        		<Route exact path="/checkout" component={Checkout}/>
+	        		<Route exact path="/checkout" render={()=><Checkout cart={this.state.cart} totalPrice={this.totalPrice}/> }/>
         		</div>
     		</Router>
 	    );

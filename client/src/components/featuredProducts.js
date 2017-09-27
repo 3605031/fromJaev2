@@ -8,31 +8,10 @@ export default class FeaturedProducts extends React.Component {
 		super(props);
 /*        this.props.handleAddToCart = this.handleAddToCart.bind(this)*/
         this.renderItems = this.renderItems.bind(this)
-        this.state = {
-            products: []
-        }
 	}
     componentDidMount() {
-        
+    	
     }
-
-    // displayFeatured = () =>{
-    //     API.getFeatured()
-    //         .then(res=>{
-    //             console.log(res)
-    //             this.setState((prevState)=>{
-    //                 console.log(prevState)
-    //                 return {
-    //                     products: res.data
-    //                 }
-    //             }, this.renderItems)
-    //         })
-    //         .then(()=>{
-    //             console.log(this.state)
-    //         })
-    //         .catch(err=> console.log(err))
-    // }
-
 
 	renderItems(){
 

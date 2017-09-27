@@ -8,7 +8,7 @@ export default class Item extends React.Component{
 
 	render(){
 		return(
-			<div className="padbot40" style={{paddingLeft: "15px", paddingRight: "15px"}} key={this.props.product_ID}>
+			<div className="padbot40 col-lg-3 col-md-3 col-sm-4 col-xs-6 col-ss-12" style={{paddingLeft: "15px", paddingRight: "15px"}} key={this.props.product_ID}>
 				<div className="tovar_item">
 					<div className="tovar_img">
 						<div className={`tovar_img_wrapper feature_item${this.props.featuredIndex}`}>
