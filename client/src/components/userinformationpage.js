@@ -11,11 +11,19 @@ export default class UserForm  extends Component {
 		super(props);
 		// Setting initial state to store the input values
 		this.state = {
-		  firstName: "",
-		  lastName: "",
-      address: "",
+      form: {
+        firstName: "",
+        lastName: "",
+        address: "",
+        email: "",
+      }, 
       isSubmitted: false,
-      shippingCost: 0 
+      shippingCost: 0,
+      orderId: "",
+      shippingMethods: [],
+      selectedShippingMethod: "",
+      tax: 0
+
 		};
 		// Binding the event listeners which we will pass as props
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -49,16 +57,28 @@ export default class UserForm  extends Component {
 
     toggleSubmit = (event) =>{
       event.preventDefault()
-      let requestObj= this.state
+      let requestObj= this.state.form
+
+      for (let prop in requestObj){
+        if (requestObj[prop] === ""){
+          alert(`Please enter your ${JSON.stringify(prop)}`)
+          return
+        }
+      }
       requestObj.cart = this.props.cart
-      axios.post("/cart", requestObj).then(res=>{
-          console.log(res)
-
+      axios.post("/cart", requestObj)
+      .then(res=>{
+          let tax = res.data.items.find(taxObj=> taxObj.type === "tax")
+          console.log("res from server side is ", res)
+          this.setState({
+            isSubmitted: !this.state.isSubmitted,
+            shippingMethods:res.data.shipping_methods,
+            selectedShippingMethod:res.data.shipping_methods[1].description,
+            tax:tax.amount,
+            orderId:res.data.id
+          })
       })
 
-      this.setState({
-          isSubmitted: !this.state.isSubmitted
-      })
 
     }
     onSubmitTable = () =>{
@@ -78,9 +98,11 @@ export default class UserForm  extends Component {
               </td>
               <td className="product-price">
                 {this.props.totalPrice() * 0.08}
+                {`tax from this.state.tax is ${this.state.tax}`}
               </td>
               <td className="product-quantity">
-                {this.state.shippingCost}
+                {this.state.orderId}
+
               </td>
             </tr>
           </tbody>
@@ -96,7 +118,7 @@ export default class UserForm  extends Component {
     console.log( value, name)
 	  // Updating the input's state
 
-    this.setState({ [event.target.name]: event.target.value })
+    this.setState({form:{[event.target.name]: event.target.value }})
 	}
 	handleFormSubmit(event) {
 	  // Preventing the default behavior of the form submit (which is to refresh the page)
@@ -126,7 +148,7 @@ export default class UserForm  extends Component {
     </FormGroup>
     <FormGroup>
       <Label for="name">Email</Label>
-      <Input type="email" name="email" />
+      <Input type="email" name="email" onChange={this.handleInputChange}/>
     </FormGroup>
     <FormGroup>
       <Label for="name">Address</Label>
