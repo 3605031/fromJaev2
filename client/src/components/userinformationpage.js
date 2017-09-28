@@ -13,12 +13,16 @@ export default class UserForm  extends Component {
 		this.state = {
 		  firstName: "",
 		  lastName: "",
-      address: ""
+      address: "",
+      isSubmitted: false,
+      shippingCost: 0 
 		};
 		// Binding the event listeners which we will pass as props
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.onToken = this.onToken.bind(this)
+    this.successPayment = this.successPayment.bind(this)
+    this.errorPayment = this.errorPayment.bind(this)
 	}
 
   onToken = (amount, description) => token => {
@@ -26,12 +30,63 @@ export default class UserForm  extends Component {
       {
         description,
         source: token.id,
-        amount: 1
+        amount: 1,
+        cart: this.props.cart
       })
-      .then(successPayment)
-      .catch(errorPayment);    
+      .then(this.successPayment)
+      .catch(this.errorPayment);    
     }
 
+    successPayment = response => {
+      console.log("response", response.body)
+
+      
+    }
+
+    errorPayment = data => {
+      console.log("err", data)
+    }
+
+    toggleSubmit = (event) =>{
+      event.preventDefault()
+      let requestObj= this.state
+      requestObj.cart = this.props.cart
+      axios.post("/cart", requestObj).then(res=>{
+          console.log(res)
+
+      })
+
+      this.setState({
+          isSubmitted: !this.state.isSubmitted
+      })
+
+    }
+    onSubmitTable = () =>{
+      return(
+        <table className = "shop_table">
+          <thead>
+            <tr>
+              <th className= "product-name">Total</th>
+              <th className= "product-price">Tax</th>
+              <th className= "product-quantity">Shipping</th>
+            </tr>
+          </thead>
+          <tbody className = "checkout_body">
+            <tr className = "cart_item">
+              <td className="product-name">
+                {this.props.totalPrice()}
+              </td>
+              <td className="product-price">
+                {this.props.totalPrice() * 0.08}
+              </td>
+              <td className="product-quantity">
+                {this.state.shippingCost}
+              </td>
+            </tr>
+          </tbody>
+        </table>          
+      )
+    }
   
 
 	handleInputChange(event) {
@@ -89,17 +144,20 @@ export default class UserForm  extends Component {
       <Label for="name">Phone</Label>
       <Input type="text" name="Phone" />
     </FormGroup>
-    <Button >Submit</Button>
+    <Button onClick = {(event)=>this.toggleSubmit(event)}>Submit</Button>
   </Form>
-<StripeCheckout
+  {this.state.isSubmitted && this.onSubmitTable()}
+{/*<StripeCheckout
           name={this.state.firstName}
           description="test"
           amount={1}
           token={this.onToken(1, "test")}
           currency={"USD"}
           stripeKey={"pk_test_1BL0osBFkpOtUv2tExXFocfj"}
-        />
+        />*/}
  
+
+
 </div>
 			)
 	}

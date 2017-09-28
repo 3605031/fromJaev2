@@ -127,7 +127,7 @@ class App extends Component {
     			<div>
 	        		<Route exact path="/" render={()=><Home cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
 	        		<Route exact path="/checkout" render={()=><Checkout cart={this.state.cart} totalPrice={this.totalPrice}/>}/>
-	        		<Route exact path = "/userinfo" render={()=><UserForm totalPrice = {this.totalPrice}/>}/>
+	        		<Route exact path = "/userinfo" render={()=><UserForm totalPrice = {this.totalPrice} cart={this.state.cart}/>}/>
         		</div>
     		</Router>
 	    );

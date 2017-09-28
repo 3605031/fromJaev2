@@ -128,7 +128,7 @@ class Checkout extends React.Component {
                                 <tbody>
                                     <tr className="cart-subtotal clearfix">
                                         <th>Estimated Sub total</th>
-                                        <td className="checkout_subtotal">$258.00</td>
+                                        <td className="checkout_subtotal">{this.props.totalPrice()}</td>
                                     </tr>
                                 </tbody>
                             </table>
