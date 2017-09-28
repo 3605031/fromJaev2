@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import update from "immutability-helper"
 import Home from "./components/Home.js"
 import Checkout from "./components/Checkout.js"
+import UserForm from "./components/userinformationpage.js"
 import API from "./utils/API.js"
 import './App.css';
 import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom';
@@ -51,7 +52,7 @@ class App extends Component {
 		} else {
 			return this.state.cart.map((item)=>{
 				return(
-					<NavItemDropdown product_name = {item.product_name} imgUrl = {item.imgUrl} quantity = {item.purchaseQuantity} price = {item.price} product_ID={item.product_ID}/>
+					<NavItemDropdown product_name = {item.product_name} imgUrl = {item.imgUrl} quantity = {item.purchaseQuantity} price = {item.price} key={item._id}/>
 					)
 				})
 		}
@@ -103,11 +104,11 @@ class App extends Component {
 
     handleAddToCart(event, addItem){
 
-    	let newProducts = this.state.products;
+		let newProducts = this.state.products;
         let newCart = this.state.products.filter(item=>item.product_ID === addItem)
         let test = newCart
-
         let index = this.state.products.indexOf(test[0]);
+
         console.log("index of item: ",index)
         console.log("newProducts quantity",newProducts[index].quantity)
         newProducts[index].quantity--
@@ -117,20 +118,6 @@ class App extends Component {
    		})
 
         this.addToCart(newCart[0])
-        let currentProducts = this.state.products
-        console.log("index is " , currentProducts.indexOf(newCart[0]))
-        let alterIndex = new Promise((resolve, reject)=>{resolve(currentProducts.indexOf(newCart[0]))})
-        alterIndex.then((index)=>{
-        	let changeThisProduct = index
-        	console.log(index, changeThisProduct)
-	        let updatedProducts = update(currentProducts, {[changeThisProduct]: {quantity:{$apply:(num)=>{return num - 1 }}}})
-       	    console.log(currentProducts, updatedProducts)
-       	    this.setState({
-       	    	products: updatedProducts
-       	    })
-        })
-
-
     }
 
 
@@ -139,7 +126,8 @@ class App extends Component {
 		    <Router>
     			<div>
 	        		<Route exact path="/" render={()=><Home cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
-	        		<Route exact path="/checkout" render={()=><Checkout cart={this.state.cart}/>}/>
+	        		<Route exact path="/checkout" render={()=><Checkout cart={this.state.cart} totalPrice={this.totalPrice}/>}/>
+	        		<Route exact path = "/userinfo" render={()=><UserForm totalPrice = {this.totalPrice}/>}/>
         		</div>
     		</Router>
 	    );

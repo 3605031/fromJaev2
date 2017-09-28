@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios";
 import Navbar from "./navbar.js"
 import { BrowserRouter as Router, Route, browserHistory, Redirect } from 'react-router-dom';
-
+import {Link} from "react-router-dom"
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -46,19 +46,34 @@ class Checkout extends React.Component {
     }
   }
 
-  get totalPrice(){
-        if (this.state.cart.length ===0){
-            return 0
-        } else {
-            let sumCart = this.state.cart
-            let sum = sumCart.reduce((a,b)=>{return a.price+b.price},0)
-            return sum
-        }
-    }
+  renderCartItems = ()=> {
+    return this.props.cart.map(item=>{
+        return (
+             <tr className="cart_item">
+                <td className="product-thumbnail"><a href="product-page.html" ><img src={item.imgUrl} width="100px" alt="" /></a></td>
+                <td className="product-name">
+                    <a href="product-page.html">{item.product_name}}</a>
+                    {/*<ul className="variation">
+                        <li className="variation-Color">Color: <span>Brown</span></li>
+                        <li className="variation-Size">Size: <span>XS</span></li>
+                    </ul>*/}
+                </td>
 
-    get totalQuantity(){
-        return this.state.cart.length
-    }
+                <td className="product-price">{item.price}</td>
+
+                <td className="product-quantity">
+                    <select className="basic">
+                        <option value="">$ {item.purchaseQuantity}</option>
+                    </select>
+                </td>
+                
+                <td className="product-subtotal">$ {item.purchaseQuantity * item.price}</td>
+
+                <td className="product-remove"><a href="javascript:void(0);" ><span>Delete</span> <i>X</i></a></td>
+            </tr>                          
+            )
+    })
+  }
 
   render() {
 
@@ -99,50 +114,7 @@ class Checkout extends React.Component {
                                 </tr>
                             </thead>
                             <tbody className="checkout_body">                               
-                                <tr className="cart_item">
-                                    <td className="product-thumbnail"><a href="product-page.html" ><img src="images/tovar/women/2.jpg" width="100px" alt="" /></a></td>
-                                    <td className="product-name">
-                                        <a href="product-page.html">Merino tippi sweater in geometric stripe</a>
-                                        {/*<ul className="variation">
-                                            <li className="variation-Color">Color: <span>Brown</span></li>
-                                            <li className="variation-Size">Size: <span>XS</span></li>
-                                        </ul>*/}
-                                    </td>
-
-                                    <td className="product-price">$96.00</td>
-
-                                    <td className="product-quantity">
-                                        <select className="basic">
-                                            <option value="">1</option>
-                                        </select>
-                                    </td>
-                                    
-                                    <td className="product-subtotal">$96.00</td>
-
-                                    <td className="product-remove"><a href="javascript:void(0);" ><span>Delete</span> <i>X</i></a></td>
-                                </tr>
-                                <tr className="cart_item">
-                                    <td className="product-thumbnail"><a href="product-page.html" ><img src="images/tovar/women/2.jpg" width="100px" alt="" /></a></td>
-                                    <td className="product-name">
-                                        <a href="product-page.html">Merino tippi sweater in geometric stripe</a>
-                                        {/*<ul className="variation">
-                                            <li className="variation-Color">Color: <span>Brown</span></li>
-                                            <li className="variation-Size">Size: <span>XS</span></li>
-                                        </ul>*/}
-                                    </td>
-
-                                    <td className="product-price">$96.00</td>
-
-                                    <td className="product-quantity">
-                                        <select className="basic">
-                                            <option value="">1</option>
-                                        </select>
-                                    </td>
-                                    
-                                    <td className="product-subtotal">$96.00</td>
-
-                                    <td className="product-remove"><a href="javascript:void(0);" ><span>Delete</span> <i>X</i></a></td>
-                                </tr>                           
+                               {this.renderCartItems()}
                             </tbody>
                         </table>
                     </div>
@@ -153,16 +125,18 @@ class Checkout extends React.Component {
                         <div className="sidepanel widget_bag_totals">
                             <h3>BAG TOTALS</h3>
                             <table className="bag_total">
-                                <tr className="cart-subtotal clearfix">
-                                    <th>Estimated Sub total</th>
-                                    <td className="checkout_subtotal">$258.00</td>
-                                </tr>
+                                <tbody>
+                                    <tr className="cart-subtotal clearfix">
+                                        <th>Estimated Sub total</th>
+                                        <td className="checkout_subtotal">$258.00</td>
+                                    </tr>
+                                </tbody>
                             </table>
                             <form className="coupon_form" action="javascript:void(0);" method="get">
                                 <input type="text" name="coupon"/>
                                 <input type="submit" value="Apply"/>
                             </form>
-                            <a className="btn active" href="javascript:void(0);" >Check out</a>
+                            <Link className="btn active" to="/userinfo" >Check out</Link>
                             <a className="btn inactive" href="/" >Continue shopping</a>
                         </div>
                     </div>{/*Sidebar*/}

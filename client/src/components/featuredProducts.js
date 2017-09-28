@@ -10,26 +10,8 @@ export default class FeaturedProducts extends React.Component {
         this.renderItems = this.renderItems.bind(this)
 	}
     componentDidMount() {
-        
+    	
     }
-
-    // displayFeatured = () =>{
-    //     API.getFeatured()
-    //         .then(res=>{
-    //             console.log(res)
-    //             this.setState((prevState)=>{
-    //                 console.log(prevState)
-    //                 return {
-    //                     products: res.data
-    //                 }
-    //             }, this.renderItems)
-    //         })
-    //         .then(()=>{
-    //             console.log(this.state)
-    //         })
-    //         .catch(err=> console.log(err))
-    // }
-
 
 	renderItems(){
 
