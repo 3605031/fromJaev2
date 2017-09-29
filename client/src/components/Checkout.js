@@ -52,7 +52,7 @@ class Checkout extends React.Component {
              <tr className="cart_item">
                 <td className="product-thumbnail"><a href="product-page.html" ><img src={item.imgUrl} width="100px" alt="" /></a></td>
                 <td className="product-name">
-                    <a href="product-page.html">{item.product_name}}</a>
+                    <a href="product-page.html">{item.product_name}</a>
                     {/*<ul className="variation">
                         <li className="variation-Color">Color: <span>Brown</span></li>
                         <li className="variation-Size">Size: <span>XS</span></li>
@@ -137,7 +137,7 @@ class Checkout extends React.Component {
                                 <input type="submit" value="Apply"/>
                             </form>
                             <Link className="btn active" to="/userinfo" >Check out</Link>
-                            <a className="btn inactive" href="/" >Continue shopping</a>
+                            <Link className="btn inactive" to="/" >Continue shopping</Link>
                         </div>
                     </div>{/*Sidebar*/}
                 </div>

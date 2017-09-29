@@ -21,7 +21,7 @@ export default class UserForm  extends Component {
       shippingCost: 0,
       orderId: "",
       shippingMethods: [],
-      selectedShippingMethod: "",
+      selectedShippingMethod: {},
       tax: 0
 
 		};
@@ -33,16 +33,16 @@ export default class UserForm  extends Component {
     this.errorPayment = this.errorPayment.bind(this)
 	}
 
-  onToken = (amount, description) => token => {
-    axios.post("/pay",
-      {
-        description,
-        source: token.id,
-        amount: 1,
-        cart: this.props.cart
-      })
-      .then(this.successPayment)
-      .catch(this.errorPayment);    
+    onToken = () => token => {
+      axios.post("/pay",
+        {
+          source: token.id,
+          cart: this.props.cart,
+          orderId : this.state.orderId,
+          selectedShippingMethod: this.state.selectedShippingMethod
+        })
+        .then(this.successPayment)
+        .catch(this.errorPayment);    
     }
 
     successPayment = response => {
@@ -65,7 +65,11 @@ export default class UserForm  extends Component {
           return
         }
       }
+
       requestObj.cart = this.props.cart
+
+
+      console.log("form sending to server",this.state.form)
       axios.post("/cart", requestObj)
       .then(res=>{
           let tax = res.data.items.find(taxObj=> taxObj.type === "tax")
@@ -73,7 +77,7 @@ export default class UserForm  extends Component {
           this.setState({
             isSubmitted: !this.state.isSubmitted,
             shippingMethods:res.data.shipping_methods,
-            selectedShippingMethod:res.data.shipping_methods[1].description,
+            selectedShippingMethod:res.data.shipping_methods[1],
             tax:tax.amount,
             orderId:res.data.id
           })
@@ -82,31 +86,39 @@ export default class UserForm  extends Component {
 
     }
     onSubmitTable = () =>{
+      console.log("stripe checkout button", this.state.form.firstName)
       return(
-        <table className = "shop_table">
-          <thead>
-            <tr>
-              <th className= "product-name">Total</th>
-              <th className= "product-price">Tax</th>
-              <th className= "product-quantity">Shipping</th>
-            </tr>
-          </thead>
-          <tbody className = "checkout_body">
-            <tr className = "cart_item">
-              <td className="product-name">
-                {this.props.totalPrice()}
-              </td>
-              <td className="product-price">
-                {this.props.totalPrice() * 0.08}
-                {`tax from this.state.tax is ${this.state.tax}`}
-              </td>
-              <td className="product-quantity">
-                {this.state.orderId}
-
-              </td>
-            </tr>
-          </tbody>
-        </table>          
+        <div>
+          <table className = "shop_table">
+            <thead>
+              <tr>
+                <th className= "product-name">Total</th>
+                <th className= "product-price">Tax</th>
+                <th className= "product-quantity">Shipping</th>
+              </tr>
+            </thead>
+            <tbody className = "checkout_body">
+              <tr className = "cart_item">
+                <td className="product-name">
+                  {this.props.totalPrice()}
+                </td>
+                <td className="product-price">
+                  {parseFloat((this.state.tax/100).toFixed(2))}
+                </td>
+                <td className="product-quantity">
+                  {parseFloat(this.state.selectedShippingMethod.amount/100).toFixed(2)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <StripeCheckout
+            name={this.state.form.firstName}
+            amount={this.props.totalPrice()*100+this.state.tax+this.state.selectedShippingMethod.amount}
+            token={this.onToken()}
+            currency={"USD"}
+            stripeKey={"pk_test_1BL0osBFkpOtUv2tExXFocfj"}
+          /> 
+       </div>          
       )
     }
   
@@ -118,19 +130,16 @@ export default class UserForm  extends Component {
     console.log( value, name)
 	  // Updating the input's state
 
-    this.setState({form:{[event.target.name]: event.target.value }})
+    let updatedState = Object.assign({}, this.state.form)
+    updatedState[event.target.name] = event.target.value
+    this.setState({form:updatedState})
 	}
 	handleFormSubmit(event) {
 	  // Preventing the default behavior of the form submit (which is to refresh the page)
 	  event.preventDefault();
 
 	  // Alert the user their first and last name, clear `this.state.firstName` and `this.state.lastName`, clearing the inputs
-	  console.log(`Hello ${this.state.firstName} ${this.state.lastName}`);
-	  this.setState({
-	    firstName: "",
-	    lastName: "",
-      address: ""
-	  });
+	  console.log(`Hello ${this.state.form.firstName} ${this.state.form.lastName}`);
 
 	}
 
@@ -168,15 +177,8 @@ export default class UserForm  extends Component {
     </FormGroup>
     <Button onClick = {(event)=>this.toggleSubmit(event)}>Submit</Button>
   </Form>
-  {this.state.isSubmitted && this.onSubmitTable()}
-{/*<StripeCheckout
-          name={this.state.firstName}
-          description="test"
-          amount={1}
-          token={this.onToken(1, "test")}
-          currency={"USD"}
-          stripeKey={"pk_test_1BL0osBFkpOtUv2tExXFocfj"}
-        />*/}
+  {this.state.isSubmitted && this.onSubmitTable()
+    }
  
 
 
