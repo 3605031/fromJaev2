@@ -19,7 +19,20 @@ class Home extends Component {
 	}
 
 
+	componentWillMount(){
+		if ( $ && window.tovarfotoHeight ) {
+    		console.log('calling tovarfotoHeight')
+        	tovarfotoHeight();
+    	}
+	}
+
 	componentDidMount(){
+
+		const script1 = document.createElement("script");
+        script1.src = "./js/jquery.jcarousel.js";
+        script1.async = true;
+        document.body.appendChild(script1);
+
 		console.log(this.props.cart)
 		if ( $ && $.flexslider ) {
 			$('.flexslider.top_slider').flexslider({

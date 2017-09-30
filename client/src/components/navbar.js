@@ -347,7 +347,7 @@ export default class NavBar extends React.Component {
 	
 
 					<Nav className = "navmenu center">
-						<NavItem className = "first active sub-menu" ><Link to="/">Home</Link></NavItem>
+						<NavItem className = "first sub-menu" ><Link to="/">Home</Link></NavItem>
 						<NavItem className = "sub-menu" ><Link to="/figurine">Figurine</Link></NavItem>
 						<NavItem className = "sub-menu" ><Link to="/stickers">Stickers</Link></NavItem>
 						<NavItem className = "sub-menu"><Link  to="/jewelry">Jewelry</Link></NavItem>

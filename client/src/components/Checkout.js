@@ -205,7 +205,7 @@ class Checkout extends React.Component {
                         </Modal.Header>
 
                         <Modal.Body>
-                            <form onSubmit={this.loginSubmit} className="signup-form">
+                            <form onSubmit={this.toggleSubmit} className="signup-form">
                                 <div className="form-group">
                                     <label className="control-label">First Name</label>
                                     <input
@@ -213,6 +213,7 @@ class Checkout extends React.Component {
                                         type="text"
                                         name="firstName"
                                         className="form-control"
+                                        value="jesse"
                                     />
                                 </div>   
 
