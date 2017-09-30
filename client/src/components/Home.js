@@ -20,6 +20,22 @@ class Home extends Component {
 
 
 	componentDidMount(){
+
+        const script2 = document.createElement("script");
+        script2.type = "text/javascript"
+        script2.src = "./js/myscript.js";
+        script2.async = true;
+
+        document.body.appendChild(script2);
+ 
+		const script1 = document.createElement("script");
+		script1.type = "text/javascript"
+        script1.src = "./js/jquery.flexslider-min.js";
+        script1.async = true;
+
+
+        document.body.appendChild(script1);
+
 		console.log(this.props.cart)
 		if ( $ && $.flexslider ) {
 			$('.flexslider.top_slider').flexslider({
@@ -34,10 +50,6 @@ class Home extends Component {
 			jQuery('.shopping_bag .cart').slideUp(1);
 			jQuery('.top_search_form form').slideUp(1);
 		}
-		if ( $ && window.tovarfotoHeight ) {
-    		console.log('calling tovarfotoHeight')
-        	tovarfotoHeight();
-    	}
     }
 
 
@@ -50,7 +62,7 @@ class Home extends Component {
 		}
 	}	
 
-	componentWillUpdate(nextProps, nextState) {
+/*	componentWillUpdate(nextProps, nextState) {
 		const script1 = document.createElement("script");
         script1.src = "./js/jquery.jcarousel.js";
         script1.async = true;
@@ -61,7 +73,7 @@ class Home extends Component {
 
         document.body.appendChild(script1);
         document.body.appendChild(script2);
-	}
+	}*/
 
 	renderItems = () => {
 		return(
@@ -94,9 +106,8 @@ class Home extends Component {
 	    return (
 		    <div id="page">
 
-
 		        <header>
-		      		<Navbar shoppingBag={this.shoppingBag} totalPrice={this.props.totalPrice} totalQuantity={this.props.totalQuantity} cart={this.props.cart} cartItems={this.props.cartItems}/>
+		      		<Navbar showSignUpModal = {this.props.showSignUpModal} showLogInModal = {this.props.showLogInModal} closeSignUp = {this.props.closeSignUp} closeLogIn = {this.props.closeLogIn} openSignUp = {this.props.openSignUp} openLogIn = {this.props.openLogIn} firstName = {this.props.firstName} isAuthenticated = {this.props.isAuthenticated} onSubmit = {this.props.onSubmit} loginSubmit = {this.props.loginSubmit} onChange = {this.props.onChange}  shoppingBag={this.shoppingBag} totalPrice={this.props.totalPrice} totalQuantity={this.props.totalQuantity} cart={this.props.cart} cartItems={this.props.cartItems}/>
 		        </header>
 
 

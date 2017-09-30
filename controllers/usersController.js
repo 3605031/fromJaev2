@@ -8,6 +8,7 @@ var User = require("../models/user");
 module.exports = {
   // This method handles retrieving articles from the db
   save: function(req, res) {
+    console.log("Saving req body in controller", req.body)
   	var newUser =  new User({
   		username : req.body.username,
 	    password : req.body.password,
@@ -17,7 +18,7 @@ module.exports = {
       address: req.body.address,
       zipCode: req.body.zipCode,
       state: req.body.state,
-      phone: req.body.phoneNumber,
+      phoneNumber: req.body.phoneNumber
   	})
 
   	newUser.save(function(err, userSaved, success){

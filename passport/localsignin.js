@@ -30,7 +30,7 @@ passport.use('local-login',new LocalStrategy(
                     address: user.address,
                     zipCode: user.zipCode,
                     state: user.state,
-                    phone: user.phoneNumber,
+                    phoneNumber: user.phoneNumber,
             	}
 
                 return done(null,token,data);

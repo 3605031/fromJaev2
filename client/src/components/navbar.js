@@ -16,99 +16,10 @@ export default class NavBar extends React.Component {
 		this.toggle = this.toggle.bind(this)
 		this.state = {
 			isOpen: false,
-			showSignUpModal: false,
-			showLogInModal : false,
-			username: '',
-      		email: '',
-      		password: '',
-      		passwordConfirmation: '',
-      		loginusername: '',
-      		loginpassword: '',
-      		isAuthenticated: false,
-      		token: '',
-      		firstName: "",
-      		lastName:"",
-      		address: "",
-      		zipCode:"",
-      		state:"",
-      		phoneNumber:""
 		}
-		this.closeSignUp = this.closeSignUp.bind(this);
-		this.closeLogIn  = this.closeLogIn.bind(this);
-		this.openLogIn   = this.openLogIn.bind(this);
-		this.openSignUp  = this.openSignUp.bind(this);
-		this.onChange    = this.onChange.bind(this);
-    	this.onSubmit    = this.onSubmit.bind(this);
-    	this.loginSubmit = this.loginSubmit.bind(this);
+
+
 	}
-
-	closeSignUp() {
-    	this.setState({ showSignUpModal: false });
-  	}
-
-  	closeLogIn(){
-  		this.setState({ showLogInModal:false})
-  	}
-
-  	openSignUp() {
-    	this.setState({ showSignUpModal: true });
-  	}
-
-  	openLogIn(){
-  		this.setState({ showLogInModal: true})
-  	}
-
-  	onChange(e) {
-    	this.setState({ [e.target.name]: e.target.value });
-  	}
-
-
-  	onSubmit(e) {
-    	e.preventDefault();
-    	if(this.state.username==''||this.state.password==''){
-        	alert("Fill out username and PW")
-    	} else {
-        	if(this.state.password != this.state.passwordConfirmation){
-            	alert("PW must match")
-        	} else {
-            axios.post("/auth/signup",this.state)
-                .then(  (response) => {
-                    console.log(response.data.success == true);
-                    if(response.data.success == true){
-                        alert("You signed up successfully!");
-                        this.closeSignUp();
-                    }
-                })
-                    .catch(function (error) {console.log(error)})
-        	}
-    	}
-    }
-
-    loginSubmit(e){
-    	e.preventDefault();
-    	if(this.state.loginusername==''||this.state.loginpassword==''){
-    		alert("Fill out username and PW")
-    	} else {
-    		console.log("You're logging in")
-    		var info = {
-    			username : this.state.loginusername,
-    			password : this.state.loginpassword
-    		}
-    		axios.post("/auth/login",info)
-    				.then((response) => {
-    					console.log("Login response",response)
-    					if(response.data.success==true){
-    						this.setState({isAuthenticated:true});
-                        	this.setState({token:response.data.token})
-                        	this.closeLogIn();
-    					} else {
-    						alert("Your credentials are wrong");
-    					}
-    				})
-    					.catch((err)=>console.log(err));
-    	}
-
-    }
 
 	toggle(){
 		if ($){
@@ -132,15 +43,15 @@ export default class NavBar extends React.Component {
 		{/*		<!-- CONTAINER -->*/}
 				<div className="container clearfix contact" >
 					
-						{this.state.isAuthenticated?
+						{this.props.isAuthenticated?
 						(<ul className="secondary_menu">	
-						<li className="username">Welcome {this.state.firstName}!</li>
+						<li className="username">Welcome {this.props.firstName}!</li>
 						<li><button>Sign Out</button></li>
 						</ul>)
 						:
 						(<ul className="secondary_menu">
-						<li><button onClick={this.openLogIn}>Log in</button></li>
-						<li><button onClick={this.openSignUp}>Register</button></li>
+						<li><button onClick={this.props.openLogIn}>Log in</button></li>
+						<li><button onClick={this.props.openSignUp}>Register</button></li>
 						</ul>)}
 						
 					<div className="live_chat"><a href="javascript:void(0);" ><i className="fa fa-comment-o"></i> Live chat</a></div>
@@ -155,17 +66,17 @@ export default class NavBar extends React.Component {
 			
 			{/*	<!-- CONTAINER -->*/}
 				<div className="container clearfix">
-				<Modal show={this.state.showSignUpModal} onHide={this.closeSignUp}>
+				<Modal show={this.props.showSignUpModal} onHide={this.props.closeSignUp}>
          			<Modal.Header closeButton>
             			<Modal.Title>Sign Up Form</Modal.Title>
           			</Modal.Header>
 
           			<Modal.Body>
-            		    <form onSubmit={this.onSubmit} className="signup-form">
+            		    <form onSubmit={(e)=>this.props.onSubmit(e)} className="signup-form">
 			                <div className="form-group">
 			                    <label className="control-label">Username</label>
 			                    <input
-			                        onChange={this.onChange}
+			                        onChange={(e)=>this.props.onChange(e)}
 			                        type="text"
 			                        name="username"
 			                        className="form-control"
@@ -175,7 +86,7 @@ export default class NavBar extends React.Component {
 			                <div className="form-group">
 			                    <label className="control-label">PW</label>
 			                    <input
-			                        onChange={this.onChange}
+			                        onChange={(e)=>this.props.onChange(e)}
 			                        type="password"
 			                        name="password"
 			                        className="form-control"
@@ -185,7 +96,7 @@ export default class NavBar extends React.Component {
 			                <div className="form-group">
 			                    <label className="control-label">Retype PW</label>
 			                    <input
-			                        onChange={this.onChange}
+			                        onChange={(e)=>this.props.onChange(e)}
 			                        type="password"
 			                        name="passwordConfirmation"
 			                        className="form-control"
@@ -195,7 +106,7 @@ export default class NavBar extends React.Component {
 			                <div className="form-group">
 			                    <label className="control-label">Email</label>
 			                    <input
-			                        onChange={this.onChange}
+			                        onChange={(e)=>this.props.onChange(e)}
 			                        type="text"
 			                        name="email"
 			                        className="form-control"
@@ -205,7 +116,7 @@ export default class NavBar extends React.Component {
 			                	<div className = "col-xs-6">
 				                    <label className="control-label">First Name</label>
 				                    <input
-				                        onChange={this.onChange}
+				                        onChange={(e)=>this.props.onChange(e)}
 				                        type="text"
 				                        name="firstName"
 				                        className="form-control"
@@ -214,7 +125,7 @@ export default class NavBar extends React.Component {
 			                	<div className = "col-xs-6">
 				                    <label className="control-label">Last Name</label>
 				                    <input
-				                        onChange={this.onChange}
+				                        onChange={(e)=>this.props.onChange(e)}
 				                        type="text"
 				                        name="lastName"
 				                        className="form-control"
@@ -226,7 +137,7 @@ export default class NavBar extends React.Component {
 			                	<div className="col-xs-12">
 				                    <label className="control-label">Address</label>
 				                    <input
-				                        onChange={this.onChange}
+				                        onChange={(e)=>this.props.onChange(e)}
 				                        type="text"
 				                        name="address"
 				                        className="form-control"
@@ -237,16 +148,16 @@ export default class NavBar extends React.Component {
 			                	<div className="col-xs-3">
 				                    <label className="control-label">Zip Code</label>
 				                    <input
-				                        onChange={this.onChange}
+				                        onChange={(e)=>this.props.onChange(e)}
 				                        type="text"
-				                        name="zip"
+				                        name="zipCode"
 				                        className="form-control"
 				                    />
 				                 </div>
 				                <div className="col-xs-2">
 				                    <label className="control-label">State</label>
 				                    <input
-				                        onChange={this.onChange}
+				                        onChange={(e)=>this.props.onChange(e)}
 				                        type="text"
 				                        name="state"
 				                        className="form-control"
@@ -255,7 +166,7 @@ export default class NavBar extends React.Component {
 				                <div className="col-xs-7">
 				                    <label className="control-label">Phone Number</label>
 				                    <input
-				                        onChange={this.onChange}
+				                        onChange={(e)=>this.props.onChange(e)}
 				                        type="text"
 				                        name="phoneNumber"
 				                        className="form-control"
@@ -268,17 +179,17 @@ export default class NavBar extends React.Component {
           			</Modal.Body>
         		</Modal>
 
-        		<Modal show={this.state.showLogInModal} onHide={this.closeLogIn}>
+        		<Modal show={this.props.showLogInModal} onHide={this.props.closeLogIn}>
          			<Modal.Header closeButton>
             			<Modal.Title>Log In Form</Modal.Title>
           			</Modal.Header>
 
           			<Modal.Body>
-            		    <form onSubmit={this.loginSubmit} className="signup-form">
+            		    <form onSubmit={(e)=>this.props.loginSubmit(e)} className="signup-form">
 			                <div className="form-group">
 			                    <label className="control-label">Username</label>
 			                    <input
-			                        onChange={this.onChange}
+			                        onChange={(e)=>this.props.onChange(e)}
 			                        type="text"
 			                        name="loginusername"
 			                        className="form-control"
@@ -288,7 +199,7 @@ export default class NavBar extends React.Component {
 			                <div className="form-group">
 			                    <label className="control-label">PW</label>
 			                    <input
-			                        onChange={this.onChange}
+			                        onChange={(e)=>this.props.onChange(e)}
 			                        type="password"
 			                        name="loginpassword"
 			                        className="form-control"

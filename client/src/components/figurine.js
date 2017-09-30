@@ -18,7 +18,7 @@ class Figurine extends Component {
 		super(props);
 /*        this.props.handleAddToCart = this.handleAddToCart.bind(this)*/
 		this.state ={
-			fromProps: [],
+			figurines: [],
 			filterByPrice: false
 
 		}
@@ -27,9 +27,26 @@ class Figurine extends Component {
         this.filterByPrice = this.filterByPrice.bind(this)
 	}
 
+	displayFigurines = () =>{
+		API.getFigurines()
+			.then(res=>{
+				console.log(res)
+				this.setState((prevState)=>{
+					console.log(prevState)
+					return {
+						figurines: res.data
+					}
+				})
+			})
+			.then(()=>{
+				console.log(this.state.figurines)
+			})
+			.catch(err=> console.log(err))
+	}
+
 	renderItems(){
 
-		return this.state.fromProps.map((toBeReplaced, index)=>{
+		return this.state.figurines.map((toBeReplaced, index)=>{
 
 			return(	
                 <Item key={toBeReplaced._id} product_ID={toBeReplaced.product_ID} imgUrl={toBeReplaced.imgUrl} handleAddToCart={this.props.handleAddToCart} product_name={toBeReplaced.product_name} price={toBeReplaced.price} quantity={toBeReplaced.quantity} featuredIndex={index}/>
@@ -38,23 +55,29 @@ class Figurine extends Component {
 		tovarfotoHeight()
 	}
 
-	setStateOnUpdate(){
-		let figurines = this.props.products.filter((item)=>item.product_category === "Figurine")
-		console.log("figurines are",figurines)	
-		this.setState({
-			fromProps: figurines
-		})
-		return 	
-	}
 
-	componentDidMount(){	
-		this.setStateOnUpdate(()=>{
+	componentDidMount(){
+		this.displayFigurines()	
+
+        const script2 = document.createElement("script");
+        script2.type = "text/javascript"
+        script2.src = "./js/myscript.js";
+        script2.async = true;
+
+        document.body.appendChild(script2);
+
+		const script1 = document.createElement("script");
+		script1.type = "text/javascript"
+        script1.src = "./js/jquery.flexslider-min.js";
+        script1.async = true;
+
+
+        document.body.appendChild(script1);
 
 			if ( $ && window.tovarfotoHeight ) {
 	    		console.log('calling tovarfotoHeight')
 	        	tovarfotoHeight();
-	    	}
-		})		
+	    	}	
 		if ( $ && $.flexslider ) {
 			$('.flexslider.top_slider').flexslider({
 				animation: "fade",
@@ -71,6 +94,7 @@ class Figurine extends Component {
 
 	}	
 
+
 	shoppingBag(){
 		if($){
 			jQuery(document).ready(function() {
@@ -82,6 +106,7 @@ class Figurine extends Component {
 
 
 	componentDidUpdate(prevProps, prevState) {
+
 		console.log('Figurine component, componentDidUpdate');
 
 	}
@@ -96,10 +121,8 @@ class Figurine extends Component {
 	    return (
 		    <div id="page">
 		        <header>
-		      		<Navbar shoppingBag={this.shoppingBag} totalPrice={this.props.totalPrice} totalQuantity={this.props.totalQuantity} cart={this.props.cart} cartItems={this.props.cartItems}/>
+		      		<Navbar showSignUpModal = {this.props.showSignUpModal} showLogInModal = {this.props.showLogInModal} closeSignUp = {this.props.closeSignUp} closeLogIn = {this.props.closeLogIn} openSignUp = {this.props.openSignUp} openLogIn = {this.props.openLogIn} firstName = {this.props.firstName} isAuthenticated = {this.props.isAuthenticated} onSubmit = {this.props.onSubmit} loginSubmit = {this.props.loginSubmit} onChange = {this.props.onChange}  shoppingBag={this.shoppingBag} totalPrice={this.props.totalPrice} totalQuantity={this.props.totalQuantity} cart={this.props.cart} cartItems={this.props.cartItems}/>
 		        </header>
-
-
 				<section id="home" className="padbot0">		
 					<div className="flexslider top_slider">
 						<ul className="slides">

@@ -13,17 +13,21 @@ class Checkout extends React.Component {
         showCheckOutModal : false,
         showPaymentModal : false,
         form: {
-                firstName: "",
+                firstName: "test",
                 lastName: "",
                 address: "",
                 email: "",
+                phoneNumber: "",
+                zipCode: "",
+                state: ""
         }, 
         isSubmitted: false,
         shippingCost: 0,
         orderId: "",
         shippingMethods: [],
         selectedShippingMethod: {},
-        tax: 0
+        tax: 0,
+        test: "test"
     }
 
     this.openCheckOutModal  = this.openCheckOutModal.bind(this);
@@ -51,6 +55,21 @@ class Checkout extends React.Component {
   	openPaymentModal() {
     	this.setState({ showPaymentModal: true });
   	}
+
+    componentDidMount() {
+        console.log("props from app.js are", this.props)
+        this.setState({
+            form: {                 
+                firstName: this.props.firstName,
+                lastName: this.props.lastName,
+                address: this.props.address,
+                email: this.props.email,
+                phoneNumber: this.props.phoneNumber,
+                zipCode: this.props.zipCode,
+                state: this.props.USstate
+            }
+        })
+    }
       
     handleInputChange(event) {
 	  // Getting the value and name of the input which triggered the change
@@ -153,7 +172,7 @@ class Checkout extends React.Component {
     if(redirect){
         return <Redirect to = "./"/>;
     }
-
+    console.log("checkout state is ", this.state)
     return (
             <div id="page">
 
@@ -213,6 +232,7 @@ class Checkout extends React.Component {
                                         type="text"
                                         name="firstName"
                                         className="form-control"
+                                        value={this.state.form.firstName}
                                     />
                                 </div>   
 
@@ -223,6 +243,7 @@ class Checkout extends React.Component {
                                         type="text"
                                         name="lastName"
                                         className="form-control"
+                                        value={this.state.form.lastName}
                                     />
                                 </div>
 
@@ -233,6 +254,7 @@ class Checkout extends React.Component {
                                         type="text"
                                         name="email"
                                         className="form-control"
+                                        value={this.state.form.email}
                                     />
                                 </div>
 
@@ -243,6 +265,7 @@ class Checkout extends React.Component {
                                         type="text"
                                         name="address"
                                         className="form-control"
+                                        value={this.state.form.address}
                                     />
                                 </div>
 
@@ -253,6 +276,7 @@ class Checkout extends React.Component {
                                         type="text"
                                         name="zipcode"
                                         className="form-control"
+                                        value={this.state.form.zipCode}
                                     />
                                 </div>
 
@@ -263,6 +287,7 @@ class Checkout extends React.Component {
                                         type="text"
                                         name="state"
                                         className="form-control"
+                                        value={this.state.form.state}
                                     />
                                 </div>
 
@@ -273,6 +298,7 @@ class Checkout extends React.Component {
                                         type="text"
                                         name="phone"
                                         className="form-control"
+                                        value = {this.state.form.phoneNumber}
                                     />
                                 </div>
 			                    <button className="btn btn-primary btn-lg" onClick={this.toggleSubmit}>Pay</button>
