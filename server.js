@@ -7,7 +7,7 @@ var mongoose = require("mongoose");
 var Product = require("./models/product.js")
 var routes = require("./routes/routes");
 mongoose.Promise = bluebird
-
+const cors = require("cors")
 
 const passport = require("passport");
 //Stripe
@@ -16,6 +16,7 @@ var stripe = require("stripe")("sk_test_GWQwhFKlpRKUXR8MF7sikVBz");
 
 
 var app = express()
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'client/public')));
