@@ -23,7 +23,7 @@ export default class Item extends React.Component{
 					</div>
 					<div className="tovar_description clearfix">
 						<a className="tovar_title feature_item_title0" href="product-page.html" >{this.props.product_name}</a>
-						<span className="tovar_price feature_item_price0">{this.props.price}</span>
+						<span className="tovar_price feature_item_price0">${this.props.price.toFixed(2)}</span>
 						<span className="tovar_quantity feature_item_quantity0">Quantity: {this.props.quantity}</span>
 					</div>
 				</div>

@@ -140,7 +140,7 @@ class Checkout extends React.Component {
                 
                 <td className="product-subtotal">${(item.purchaseQuantity * item.price).toFixed(2)}</td>
 
-                <td className="product-remove"><a href="javascript:void(0);" ><span>Delete</span> <i>X</i></a></td>
+                <td className="product-remove"><a onClick={() => this.props.removeFromCart(item._id)} ><span>Delete</span> <i>X</i></a></td>
             </tr>                          
             )
     })
@@ -320,7 +320,7 @@ class Checkout extends React.Component {
                                 <tbody>
                                     <tr className="cart-subtotal clearfix">
                                         <th>Estimated Sub total</th>
-                                        <td className="checkout_subtotal">{this.props.totalPrice()}</td>
+                                        <td className="checkout_subtotal">${this.props.totalPrice().toFixed(2)}</td>
                                     </tr>
                                 </tbody>
                             </table>

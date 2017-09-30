@@ -12,20 +12,6 @@ export default class NewArrivals extends React.Component {
 	}
 
 
-	renderNavigation = () =>{
-		let newproducts = this.props.products.filter(item=>item.new)
-		if (newproducts.length > 6){
-			return(
-				<div className="jCarousel_pagination">
-					<a href="javascript:void(0);" className="jcarousel-control-prev" ><i className="fa fa-angle-left"></i></a>
-					<a href="javascript:void(0);" className="jcarousel-control-next" ><i className="fa fa-angle-right"></i></a>
-				</div>
-				)
-		} else{
-			return
-		}
-	}
-
 	renderItems = () => {
 		return(
 			//eventually, dummyobj will be replaced with an API call to retrieve the items from database (items to be presorted server side)
@@ -62,7 +48,10 @@ export default class NewArrivals extends React.Component {
 			{/*<!-- CONTAINER -->*/}
 			<div className="container">
 				<h2>new arrivals</h2>
-				{this.renderNavigation()}
+				<div className="jCarousel_pagination">
+					<a href="javascript:void(0);" className="jcarousel-control-prev" ><i className="fa fa-angle-left"></i></a>
+					<a href="javascript:void(0);" className="jcarousel-control-next" ><i className="fa fa-angle-right"></i></a>
+				</div>
 				{/*<!-- JCAROUSEL -->*/}
 				<div className="jcarousel-wrapper">
 					<div className="jcarousel" data-appear-top-offset='-100' data-animated='fadeInUp'>

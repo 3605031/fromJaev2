@@ -19,6 +19,7 @@ class App extends Component {
 		this.addToCart       = this.addToCart.bind(this)
     	this.cartItems = this.cartItems.bind(this)
     	this.totalPrice = this.totalPrice.bind(this)
+    	this.removeFromCart = this.removeFromCart.bind(this)
 
 	}
 
@@ -27,7 +28,7 @@ class App extends Component {
 		this.getAll();
 		console.log(this.state.products);
 		if ( $ && window.tovarfotoHeight ) {
-		    tovarfotoHeight();
+		        	tovarfotoHeight();
     	}
 
 	}	
@@ -99,12 +100,12 @@ class App extends Component {
 		}
 	}
 
-	removeFromCart(event, item){
-		event.preventDefault()
-		let removedItem = item
-		this.setState(prevState=>({
-			cart: prevState.cart.filter(cart =>{return cart !== removedItem})
-		}))
+	removeFromCart = (data) => {
+		console.log("Removing from cart: ", data);
+		var newCart = this.state.cart.filter((item) => item._id!=data);
+		this.setState({
+			cart: newCart
+		})
 	}	
 
 
@@ -133,7 +134,7 @@ class App extends Component {
 		    <Router>
     			<div>
 	        		<Route exact path="/" render={()=><Home cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
-	        		<Route exact path="/checkout" render={()=><Checkout cart={this.state.cart} totalPrice={this.totalPrice}/>}/>
+	        		<Route exact path="/checkout" render={()=><Checkout removeFromCart={this.removeFromCart} cart={this.state.cart} totalPrice={this.totalPrice}/>}/>
 	        		<Route exact path = "/userinfo" render={()=><UserForm totalPrice = {this.totalPrice} cart={this.state.cart}/>}/>
         		</div>
     		</Router>

@@ -13,7 +13,7 @@ class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-	
+			newArrivals:false
 		}
 		this.shoppingBag = this.shoppingBag.bind(this);
 	}
@@ -38,7 +38,8 @@ class Home extends Component {
     		console.log('calling tovarfotoHeight')
         	tovarfotoHeight();
     	}
-	}
+    }
+
 
 	shoppingBag(){
 		if($){
@@ -49,11 +50,45 @@ class Home extends Component {
 		}
 	}	
 
-	componentDidUpdate(prevProps, prevState) {
-		console.log('Home component, componentDidUpdate');
+	componentWillUpdate(nextProps, nextState) {
+		const script1 = document.createElement("script");
+        script1.src = "./js/jquery.jcarousel.js";
+        script1.async = true;
+
+        const script2 = document.createElement("script");
+        script2.src = "./js/myscript.js";
+        script2.async = true;
+
+        document.body.appendChild(script1);
+        document.body.appendChild(script2);
 	}
 
-
+	renderItems = () => {
+		return(
+			<ul>
+			{this.props.products.reduce((newItems, product)=>{
+				if (product.new){
+					newItems.push(<li key={product.product_ID}>
+						{/*<!-- TOVAR -->*/}
+						<div className="tovar_item_new">
+							<div className="tovar_img">
+								<img src={product.imgUrl} alt="" />
+								<div className="open-project-link"><a className="open-project tovar_view" href="javascript:void(0);" data-url="!projects/women/1.html" >quick view</a></div>
+							</div>
+							<div className="tovar_description clearfix">
+								<a className="tovar_title" href="product-page.html" >{product.product_name}</a>
+								<span className="tovar_price">{"$" + product.price}</span>
+							</div>
+						</div>{/*<!-- //TOVAR -->*/}
+					</li>)
+				}
+				
+				return newItems
+					
+			}, [])}
+			</ul>
+		)
+	}
 
   	render() {
 	    return (
@@ -76,7 +111,27 @@ class Home extends Component {
 		        
 		        <Featured handleAddToCart={this.props.handleAddToCart} products={this.props.products}/>
 
-		        <NewArrival handleAddToCart={this.props.handleAddToCart} products={this.props.products}/>
+		        <section className="new_arrivals padbot50">
+			
+			{/*<!-- CONTAINER -->*/}
+			<div className="container">
+				<h2>new arrivals</h2>
+				
+				{/*<!-- JCAROUSEL -->*/}
+				<div className="jcarousel-wrapper">
+					
+					{/*<!-- NAVIGATION -->*/}
+					<div className="jCarousel_pagination">
+						<a href="javascript:void(0);" className="jcarousel-control-prev" ><i className="fa fa-angle-left"></i></a>
+						<a href="javascript:void(0);" className="jcarousel-control-next" ><i className="fa fa-angle-right"></i></a>
+					</div>{/*<!-- //NAVIGATION -->*/}
+					
+					<div className="jcarousel" data-appear-top-offset='-100' data-animated='fadeInUp'>
+						{this.renderItems()}
+					</div>
+				</div>{/*<!-- //JCAROUSEL -->*/}
+			</div>
+	{/*<!-- //NEW ARRIVALS -->*/}</section>
 
 		        <hr className="container"/>
 
