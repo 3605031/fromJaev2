@@ -134,12 +134,21 @@ export default class NavBar extends React.Component {
 		                	</div>
 
 			                <div className="form-group row">
-			                	<div className="col-xs-12">
+			                	<div className="col-xs-8">
 				                    <label className="control-label">Address</label>
 				                    <input
 				                        onChange={(e)=>this.props.onChange(e)}
 				                        type="text"
 				                        name="address"
+				                        className="form-control"
+				                    />
+			                    </div>
+			                    <div className="col-xs-4">
+				                    <label className="control-label">City</label>
+				                    <input
+				                        onChange={(e)=>this.props.onChange(e)}
+				                        type="text"
+				                        name="city"
 				                        className="form-control"
 				                    />
 			                    </div>

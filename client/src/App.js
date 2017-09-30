@@ -23,6 +23,7 @@ class App extends Component {
       		lastName:"",
       		address: "",
       		zipCode:"",
+      		city: "",
       		state:"",
       		phoneNumber:"",
 			username: '',
@@ -244,7 +245,7 @@ class App extends Component {
 		    <Router>
     			<div>
 	        		<Route exact path="/" render={()=><Home showSignUpModal = {this.state.showSignUpModal} showLogInModal = {this.state.showLogInModal} closeSignUp = {this.closeSignUp} closeLogIn = {this.closeLogIn} openSignUp = {this.openSignUp} openLogIn = {this.openLogIn} firstName = {this.state.firstName} isAuthenticated = {this.state.isAuthenticated} onSubmit = {this.onSubmit} loginSubmit = {this.loginSubmit} onChange = {this.onChange}  cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
-	        		<Route exact path="/checkout" render={()=><Checkout firstName = {this.state.firstName} lastName = {this.state.lastName} address = {this.state.address} zipCode = {this.state.zipCode} USstate= {this.state.state} phoneNumber = {this.state.phoneNumber} email = {this.state.email} isAuthenticated = {this.state.isAuthenticated} removeFromCart={this.removeFromCart} cart={this.state.cart} totalPrice={this.totalPrice}/>}/>
+	        		<Route exact path="/checkout" render={()=><Checkout firstName = {this.state.firstName} lastName = {this.state.lastName} address = {this.state.address} zipCode = {this.state.zipCode} USstate= {this.state.state} phoneNumber = {this.state.phoneNumber} email = {this.state.email} city={this.state.city} isAuthenticated = {this.state.isAuthenticated} removeFromCart={this.removeFromCart} cart={this.state.cart} totalPrice={this.totalPrice}/>}/>
 	        		<Route exact path ="/userinfo" render={()=><UserForm firstName = {this.state.firstName} totalPrice = {this.totalPrice} cart={this.state.cart}/>}/>
 	        		<Route exact path="/figurine" render={()=><Figurine showSignUpModal = {this.state.showSignUpModal} showLogInModal = {this.state.showLogInModal} closeSignUp = {this.closeSignUp} closeLogIn = {this.closeLogIn} openSignUp = {this.openSignUp} openLogIn = {this.openLogIn} firstName = {this.state.firstName} isAuthenticated = {this.state.isAuthenticated} onSubmit = {this.onSubmit} loginSubmit = {this.loginSubmit} onChange = {this.onChange}  cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
 	        		<Route exact path="/jewelry" render={()=><Jewelry showSignUpModal = {this.state.showSignUpModal} showLogInModal = {this.state.showLogInModal} closeSignUp = {this.closeSignUp} closeLogIn = {this.closeLogIn} openSignUp = {this.openSignUp} openLogIn = {this.openLogIn} firstName = {this.state.firstName} isAuthenticated = {this.state.isAuthenticated} onSubmit = {this.onSubmit} loginSubmit = {this.loginSubmit} onChange = {this.onChange}  cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>

@@ -19,7 +19,8 @@ class Checkout extends React.Component {
                 email: "",
                 phoneNumber: "",
                 zipCode: "",
-                state: ""
+                state: "",
+                city:""
         }, 
         isSubmitted: false,
         shippingCost: 0,
@@ -66,7 +67,8 @@ class Checkout extends React.Component {
                 email: this.props.email,
                 phoneNumber: this.props.phoneNumber,
                 zipCode: this.props.zipCode,
-                state: this.props.USstate
+                state: this.props.USstate,
+                city: this.props.city
             }
         })
     }
@@ -266,6 +268,17 @@ class Checkout extends React.Component {
                                         name="address"
                                         className="form-control"
                                         value={this.state.form.address}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="control-label">City</label>
+                                    <input
+                                        onChange={this.handleInputChange}
+                                        type="text"
+                                        name="city"
+                                        className="form-control"
+                                        value={this.state.form.city}
                                     />
                                 </div>
 
