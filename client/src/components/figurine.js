@@ -9,30 +9,52 @@ import '../App.css';
 import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom';
 import Flexbox from "flexbox-react"
 import Item from "./common/item.js"
+import Toggle from "react-toggle"
+import "react-toggle/style.css"
 
 
 class Figurine extends Component {
 	constructor(props) {
 		super(props);
 /*        this.props.handleAddToCart = this.handleAddToCart.bind(this)*/
+		this.state ={
+			fromProps: [],
+			filterByPrice: false
+
+		}
         this.renderItems = this.renderItems.bind(this)
         this.shoppingBag = this.shoppingBag.bind(this)
+        this.filterByPrice = this.filterByPrice.bind(this)
 	}
 
 	renderItems(){
 
-		let newproducts = this.props.products.filter((item)=>item.product_category === "Figurine")
-		//eventully, dummyobj will be replaced with an API call to retrieve the items from database 
-		return newproducts.map((toBeReplaced, index)=>{
+		return this.state.fromProps.map((toBeReplaced, index)=>{
 
 			return(	
                 <Item key={toBeReplaced._id} product_ID={toBeReplaced.product_ID} imgUrl={toBeReplaced.imgUrl} handleAddToCart={this.props.handleAddToCart} product_name={toBeReplaced.product_name} price={toBeReplaced.price} quantity={toBeReplaced.quantity} featuredIndex={index}/>
 				)
 		})
+		tovarfotoHeight()
 	}
 
-	componentDidMount(){
-		console.log(this.props.cart)
+	setStateOnUpdate(){
+		let figurines = this.props.products.filter((item)=>item.product_category === "Figurine")
+		console.log("figurines are",figurines)	
+		this.setState({
+			fromProps: figurines
+		})
+		return 	
+	}
+
+	componentDidMount(){	
+		this.setStateOnUpdate(()=>{
+
+			if ( $ && window.tovarfotoHeight ) {
+	    		console.log('calling tovarfotoHeight')
+	        	tovarfotoHeight();
+	    	}
+		})		
 		if ( $ && $.flexslider ) {
 			$('.flexslider.top_slider').flexslider({
 				animation: "fade",
@@ -41,15 +63,12 @@ class Figurine extends Component {
 				prevText: "",
 				nextText: ""
 			});
-		}
+			}
 		if ( $ ) {
 			jQuery('.shopping_bag .cart').slideUp(1);
 			jQuery('.top_search_form form').slideUp(1);
-		}
-		if ( $ && window.tovarfotoHeight ) {
-    		console.log('calling tovarfotoHeight')
-        	tovarfotoHeight();
-    	}
+		}		
+
 	}	
 
 	shoppingBag(){
@@ -64,6 +83,11 @@ class Figurine extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		console.log('Figurine component, componentDidUpdate');
+
+	}
+
+	filterByPrice(){
+		return 
 	}
 
 
@@ -84,7 +108,9 @@ class Figurine extends Component {
 						</ul>
 					</div>
 				</section>
-		        
+{/*		        <section className = "filter_bar">
+		        	<label><Toggle defaultChecked = {this.state.filterByPrice} checked={this.filterByPrice}/>Sort by Price</label>
+		        </section>*/}
 				<section className="tovar_section">
 					{/*<!-- CONTAINER -->*/}
 					<div className="container">

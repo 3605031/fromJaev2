@@ -25,7 +25,13 @@ export default class NavBar extends React.Component {
       		loginusername: '',
       		loginpassword: '',
       		isAuthenticated: false,
-      		token: ''
+      		token: '',
+      		firstName: "",
+      		lastName:"",
+      		address: "",
+      		zipCode:"",
+      		state:"",
+      		phoneNumber:""
 		}
 		this.closeSignUp = this.closeSignUp.bind(this);
 		this.closeLogIn  = this.closeLogIn.bind(this);
@@ -128,7 +134,7 @@ export default class NavBar extends React.Component {
 					
 						{this.state.isAuthenticated?
 						(<ul className="secondary_menu">	
-						<li className="username">Welcome {this.state.loginusername}!</li>
+						<li className="username">Welcome {this.state.firstName}!</li>
 						<li><button>Sign Out</button></li>
 						</ul>)
 						:
@@ -195,6 +201,68 @@ export default class NavBar extends React.Component {
 			                        className="form-control"
 			                    />
 			                </div> 
+			                <div className="form-group row">
+			                	<div className = "col-xs-6">
+				                    <label className="control-label">First Name</label>
+				                    <input
+				                        onChange={this.onChange}
+				                        type="text"
+				                        name="firstName"
+				                        className="form-control"
+				                    />
+				                </div>
+			                	<div className = "col-xs-6">
+				                    <label className="control-label">Last Name</label>
+				                    <input
+				                        onChange={this.onChange}
+				                        type="text"
+				                        name="lastName"
+				                        className="form-control"
+				                    />
+				                </div>
+		                	</div>
+
+			                <div className="form-group row">
+			                	<div className="col-xs-12">
+				                    <label className="control-label">Address</label>
+				                    <input
+				                        onChange={this.onChange}
+				                        type="text"
+				                        name="address"
+				                        className="form-control"
+				                    />
+			                    </div>
+			                </div>
+			                <div className="form-group row">
+			                	<div className="col-xs-3">
+				                    <label className="control-label">Zip Code</label>
+				                    <input
+				                        onChange={this.onChange}
+				                        type="text"
+				                        name="zip"
+				                        className="form-control"
+				                    />
+				                 </div>
+				                <div className="col-xs-2">
+				                    <label className="control-label">State</label>
+				                    <input
+				                        onChange={this.onChange}
+				                        type="text"
+				                        name="state"
+				                        className="form-control"
+				                    />
+				                </div>
+				                <div className="col-xs-7">
+				                    <label className="control-label">Phone Number</label>
+				                    <input
+				                        onChange={this.onChange}
+				                        type="text"
+				                        name="phoneNumber"
+				                        className="form-control"
+				                    />
+				                </div>
+			                </div>
+
 			                <button className="btn btn-primary btn-lg">Signup</button>
             			</form>
           			</Modal.Body>

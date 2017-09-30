@@ -10,8 +10,14 @@ module.exports = {
   save: function(req, res) {
   	var newUser =  new User({
   		username : req.body.username,
-  	    password : req.body.password,
-  	    email : req.body.email
+	    password : req.body.password,
+	    email : req.body.email,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      address: req.body.address,
+      zipCode: req.body.zipCode,
+      state: req.body.state,
+      phone: req.body.phoneNumber,
   	})
 
   	newUser.save(function(err, userSaved, success){
