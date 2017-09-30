@@ -138,10 +138,10 @@ router.post("/cart", function(req, res){
 			name: `${req.body.firstName} ${req.body.lastName}`,
 			address: {
 				line1: req.body.address,
-				city: "San Diego",
-				state: "CA",
+				city: "",
+				state: req.body.state,
 				country: "US",
-				postal_code: "92122"
+				postal_code: req.body.zipCode
 			}
 		},
 		email: req.body.email

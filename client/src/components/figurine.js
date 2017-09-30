@@ -18,13 +18,32 @@ class Figurine extends Component {
 		super(props);
 /*        this.props.handleAddToCart = this.handleAddToCart.bind(this)*/
 		this.state ={
-			figurines: [],
-			filterByPrice: false
+			figurines : []
 
 		}
         this.renderItems = this.renderItems.bind(this)
         this.shoppingBag = this.shoppingBag.bind(this)
-        this.filterByPrice = this.filterByPrice.bind(this)
+        this.getFigurines = this.getFigurines.bind(this)
+        this.filterLow   = this.filterLow.bind(this)
+        this.filterHigh   = this.filterHigh.bind(this)
+	}
+
+	getFigurines(){
+		API.getFigurines()
+			.then(res =>{
+				this.setState((prevState)=>{
+					return {
+						figurines: res.data 
+					}
+				})
+			})
+			.then(()=>{
+				if ( $ && window.tovarfotoHeight ) {
+		    		console.log('calling tovarfotoHeight')
+		        	tovarfotoHeight();
+    			}
+			})
+			.catch(err => console.log(err))
 	}
 
 	displayFigurines = () =>{
@@ -56,28 +75,9 @@ class Figurine extends Component {
 	}
 
 
-	componentDidMount(){
-		this.displayFigurines()	
 
-        const script2 = document.createElement("script");
-        script2.type = "text/javascript"
-        script2.src = "./js/myscript.js";
-        script2.async = true;
-
-        document.body.appendChild(script2);
-
-		const script1 = document.createElement("script");
-		script1.type = "text/javascript"
-        script1.src = "./js/jquery.flexslider-min.js";
-        script1.async = true;
-
-
-        document.body.appendChild(script1);
-
-			if ( $ && window.tovarfotoHeight ) {
-	    		console.log('calling tovarfotoHeight')
-	        	tovarfotoHeight();
-	    	}	
+	componentDidMount(){	
+		this.getFigurines()			
 		if ( $ && $.flexslider ) {
 			$('.flexslider.top_slider').flexslider({
 				animation: "fade",
@@ -90,7 +90,14 @@ class Figurine extends Component {
 		if ( $ ) {
 			jQuery('.shopping_bag .cart').slideUp(1);
 			jQuery('.top_search_form form').slideUp(1);
-		}		
+			jQuery('')
+		}
+
+		if ( $ && window.tovarfotoHeight ) {
+    		console.log('calling tovarfotoHeight')
+        	tovarfotoHeight();
+    	}
+
 
 	}	
 
@@ -105,14 +112,38 @@ class Figurine extends Component {
 	}	
 
 
-	componentDidUpdate(prevProps, prevState) {
 
-		console.log('Figurine component, componentDidUpdate');
+	componentWillUpdate(nextProps, nextState) {
+		const script1 = document.createElement("script");
+        script1.src = "./js/jquery.jcarousel.js";
+        script1.async = true;
 
+        const script2 = document.createElement("script");
+        script2.src = "./js/myscript.js";
+        script2.async = true;
+
+        document.body.appendChild(script1);
+        document.body.appendChild(script2);
 	}
 
-	filterByPrice(){
-		return 
+	filterLow(){
+
+		let lowSort = this.state.figurines.sort(function(a, b) {
+		    return parseFloat(a.price) - parseFloat(b.price);
+		});
+		this.setState({
+			figurines : lowSort
+		})
+	}
+
+	filterHigh(){
+
+		let highSort = this.state.figurines.sort(function(a, b) {
+		    return parseFloat(b.price) - parseFloat(a.price);
+		});
+		this.setState({
+			figurines : highSort
+		})
 	}
 
 
@@ -137,7 +168,11 @@ class Figurine extends Component {
 				<section className="tovar_section">
 					{/*<!-- CONTAINER -->*/}
 					<div className="container">
-						<h2 id="feature_title">Figurines</h2>
+						<div className="row">
+							<h2 id="feature_title">Figurines </h2>
+							<button onClick={this.filterHigh} className="btn btn-sm sort">Sort by Highest</button> 
+							<button onClick={this.filterLow} className="btn btn-sm sort">Sort by Lowest</button>
+						</div>
 						
 						{/*<!-- ROW -->*/}
 						<Flexbox>
