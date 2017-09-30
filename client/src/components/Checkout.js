@@ -97,6 +97,7 @@ class Checkout extends React.Component {
     }
 
     onToken = () => token => {
+      this.closePaymentModal();  
       axios.post("/pay",
         {
           source: token.id,
@@ -131,15 +132,13 @@ class Checkout extends React.Component {
                     </ul>*/}
                 </td>
 
-                <td className="product-price">{item.price}</td>
+                <td className="product-price">${item.price.toFixed(2)}</td>
 
-                <td className="product-quantity">
-                    <select className="basic">
-                        <option value="">$ {item.purchaseQuantity}</option>
-                    </select>
+                <td className="product-price">
+                {item.purchaseQuantity}
                 </td>
                 
-                <td className="product-subtotal">$ {item.purchaseQuantity * item.price}</td>
+                <td className="product-subtotal">${(item.purchaseQuantity * item.price).toFixed(2)}</td>
 
                 <td className="product-remove"><a href="javascript:void(0);" ><span>Delete</span> <i>X</i></a></td>
             </tr>                          

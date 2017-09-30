@@ -5,6 +5,7 @@ var authRoutes = require("./authRoutes");
 var router = new express.Router();
 var stripe = require("stripe")("sk_test_GWQwhFKlpRKUXR8MF7sikVBz");
 var shippo = require('shippo')('shippo_test_7d3322dc54a6d8e3aa8f19dad3b4ae35a1620e8f');
+var mailjet = require('node-mailjet').connect('518dc70c0a59bf49269b80dc95b04b9a', '88061bc5cc275d1643102d06d72eabf2');
 
 // Use the apiRoutes module for any routes starting with "/api"
 router.use("/api", apiRoutes);
@@ -79,6 +80,28 @@ router.post("/pay", function(req, res){
 				    // asynchronously called
 				    console.log("Shippo error", err)
 				    console.log("Shippo transaction", transaction)
+				    mailjet
+				    .post("send", {'version': 'v3.1'})
+					    .request({
+					        "Messages":[
+					                {
+					                        "From": {
+					                                "Email": "huynhanhhoang1995@gmail.com",
+					                                "Name": "Blake"
+					                        },
+					                        "To": [
+					                                {
+					                                        "Email": "jessselu@gmail.com",
+					                                        "Name": paidOrder.shipping.name
+					                                }
+					                        ],
+					                        "Subject": "Your fromJae tracking number",
+					                        "TextPart": "Your order is being processed. Please check your tracking number to see updates",
+					                        "HTMLPart": `<a href=${transaction.tracking_url_provider}>USPS tracking #</a>`
+					                }
+					        ]
+					    })
+
 				});
 			});
 

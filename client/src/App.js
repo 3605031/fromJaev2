@@ -25,7 +25,10 @@ class App extends Component {
 
 	componentDidMount(){
 		this.getAll();
-		console.log(this.state.products)
+		console.log(this.state.products);
+		if ( $ && window.tovarfotoHeight ) {
+		    tovarfotoHeight();
+    	}
 
 	}	
 
@@ -39,6 +42,10 @@ class App extends Component {
 				})
 			})
 			.then(()=>{
+				if ( $ && window.tovarfotoHeight ) {
+		    		console.log('calling tovarfotoHeight')
+		        	tovarfotoHeight();
+    			}
 			})
 			.catch(err => console.log(err))
 	}
