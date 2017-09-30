@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import update from "immutability-helper"
 import Home from "./components/Home.js"
+import Figurine from "./components/figurine.js"
+import Jewelry from "./components/jewelry.js"
+import Stickers from "./components/stickers.js"
+import Sale from "./components/sale.js"
 import Checkout from "./components/Checkout.js"
 import UserForm from "./components/userinformationpage.js"
 import API from "./utils/API.js"
@@ -136,6 +140,10 @@ class App extends Component {
 	        		<Route exact path="/" render={()=><Home cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
 	        		<Route exact path="/checkout" render={()=><Checkout removeFromCart={this.removeFromCart} cart={this.state.cart} totalPrice={this.totalPrice}/>}/>
 	        		<Route exact path = "/userinfo" render={()=><UserForm totalPrice = {this.totalPrice} cart={this.state.cart}/>}/>
+	        		<Route exact path="/figurine" render={()=><Figurine cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
+	        		<Route exact path="/jewelry" render={()=><Jewelry cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
+	        		<Route exact path="/stickers" render={()=><Stickers cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
+	        		<Route exact path="/sale" render={()=><Sale cart={this.state.cart} cartItems={this.cartItems} products={this.state.products} handleAddToCart={this.handleAddToCart} totalPrice={this.totalPrice} totalQuantity={this.totalQuantity} getAll={this.getAll} />}/>
         		</div>
     		</Router>
 	    );

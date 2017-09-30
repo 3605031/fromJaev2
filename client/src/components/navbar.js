@@ -25,7 +25,13 @@ export default class NavBar extends React.Component {
       		loginusername: '',
       		loginpassword: '',
       		isAuthenticated: false,
-      		token: ''
+      		token: '',
+      		firstName: "",
+      		lastName:"",
+      		address: "",
+      		zipCode:"",
+      		state:"",
+      		phoneNumber:""
 		}
 		this.closeSignUp = this.closeSignUp.bind(this);
 		this.closeLogIn  = this.closeLogIn.bind(this);
@@ -105,9 +111,10 @@ export default class NavBar extends React.Component {
     }
 
 	toggle(){
-		this.setState({
-			isOpen: !this.state.isOpen
-		})
+		if ($){
+			$('.shopping_bag .cart').slideToggle()
+			$('.shopping_bag .cart').parent().toggleClass('cart_active')
+		}
 	}
 
 
@@ -127,7 +134,7 @@ export default class NavBar extends React.Component {
 					
 						{this.state.isAuthenticated?
 						(<ul className="secondary_menu">	
-						<li className="username">Welcome {this.state.loginusername}!</li>
+						<li className="username">Welcome {this.state.firstName}!</li>
 						<li><button>Sign Out</button></li>
 						</ul>)
 						:
@@ -194,6 +201,68 @@ export default class NavBar extends React.Component {
 			                        className="form-control"
 			                    />
 			                </div> 
+			                <div className="form-group row">
+			                	<div className = "col-xs-6">
+				                    <label className="control-label">First Name</label>
+				                    <input
+				                        onChange={this.onChange}
+				                        type="text"
+				                        name="firstName"
+				                        className="form-control"
+				                    />
+				                </div>
+			                	<div className = "col-xs-6">
+				                    <label className="control-label">Last Name</label>
+				                    <input
+				                        onChange={this.onChange}
+				                        type="text"
+				                        name="lastName"
+				                        className="form-control"
+				                    />
+				                </div>
+		                	</div>
+
+			                <div className="form-group row">
+			                	<div className="col-xs-12">
+				                    <label className="control-label">Address</label>
+				                    <input
+				                        onChange={this.onChange}
+				                        type="text"
+				                        name="address"
+				                        className="form-control"
+				                    />
+			                    </div>
+			                </div>
+			                <div className="form-group row">
+			                	<div className="col-xs-3">
+				                    <label className="control-label">Zip Code</label>
+				                    <input
+				                        onChange={this.onChange}
+				                        type="text"
+				                        name="zip"
+				                        className="form-control"
+				                    />
+				                 </div>
+				                <div className="col-xs-2">
+				                    <label className="control-label">State</label>
+				                    <input
+				                        onChange={this.onChange}
+				                        type="text"
+				                        name="state"
+				                        className="form-control"
+				                    />
+				                </div>
+				                <div className="col-xs-7">
+				                    <label className="control-label">Phone Number</label>
+				                    <input
+				                        onChange={this.onChange}
+				                        type="text"
+				                        name="phoneNumber"
+				                        className="form-control"
+				                    />
+				                </div>
+			                </div>
+
 			                <button className="btn btn-primary btn-lg">Signup</button>
             			</form>
           			</Modal.Body>
@@ -278,11 +347,11 @@ export default class NavBar extends React.Component {
 	
 
 					<Nav className = "navmenu center">
-						<NavButton propClass = "first active sub-menu" url={this.props.toggleHome} name="Home" />
-						<NavButton propClass = "sub-menu" url={this.props.toggleFigurines} name="Figurine" />
-						<NavButton propClass = "sub-menu" url={this.props.toggleStickers} name="Stickers" />
-						<NavButton propClass = "sub-menu" url={this.props.toggleJewelry} name="Jewelry" />
-						<NavButton propClass = "last sub-menu" url={this.props.toggleSale} name="Sale" />
+						<NavItem className = "first active sub-menu" ><Link to="/">Home</Link></NavItem>
+						<NavItem className = "sub-menu" ><Link to="/figurine">Figurine</Link></NavItem>
+						<NavItem className = "sub-menu" ><Link to="/stickers">Stickers</Link></NavItem>
+						<NavItem className = "sub-menu"><Link  to="/jewelry">Jewelry</Link></NavItem>
+						<NavItem className = "last sub-menu"><Link  to="/sale">Sale</Link></NavItem>
 					</Nav>
 				</div>{/*<!-- //MENU BLOCK -->*/}
 			</div> {/*<!-- //CONTAINER -->*/}

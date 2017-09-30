@@ -8,7 +8,8 @@ const jwt = require('jsonwebtoken');
 
 passport.use('local-login',new LocalStrategy(
     function(username, password, done){
-        User.findOne({username: username}).then(function(user){
+        User.findOne({username: username}).exec(function(err, user){
+            if (err) throw err
             if(!user){
                 return done(null,false,{message:"Unknown username"})
             }
@@ -22,7 +23,14 @@ passport.use('local-login',new LocalStrategy(
             	const token = jwt.sign(payload,config.jwtSecret);
             	const data = {
             		name : user.username,
-            		email: user.email
+            		email: user.email,
+                    _id: user._id,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    address: user.address,
+                    zipCode: user.zipCode,
+                    state: user.state,
+                    phone: user.phoneNumber,
             	}
 
                 return done(null,token,data);
