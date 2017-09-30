@@ -105,9 +105,10 @@ export default class NavBar extends React.Component {
     }
 
 	toggle(){
-		this.setState({
-			isOpen: !this.state.isOpen
-		})
+		if ($){
+			$('.shopping_bag .cart').slideToggle()
+			$('.shopping_bag .cart').parent().toggleClass('cart_active')
+		}
 	}
 
 
@@ -247,7 +248,7 @@ export default class NavBar extends React.Component {
 					
 		{/*			<!-- SHOPPING BAG -->*/}
 					<div className="shopping_bag">
-						<a className="shopping_bag_btn" href="javascript:void(0);" ><i className="fa fa-shopping-cart"></i><p>shopping bag</p><span id="bagquantity">{this.props.totalQuantity}</span></a>
+						<a className="shopping_bag_btn" href="#" onClick={this.toggle}><i className="fa fa-shopping-cart"></i><p>shopping bag</p><span id="bagquantity">{this.props.totalQuantity}</span></a>
 						<div className="cart">
 							<ul className="cart-items cart-main">
 								{this.props.cartItems()}
@@ -278,11 +279,11 @@ export default class NavBar extends React.Component {
 	
 
 					<Nav className = "navmenu center">
-						<NavButton propClass = "first active sub-menu" url={this.props.toggleHome} name="Home" />
-						<NavButton propClass = "sub-menu" url={this.props.toggleFigurines} name="Figurine" />
-						<NavButton propClass = "sub-menu" url={this.props.toggleStickers} name="Stickers" />
-						<NavButton propClass = "sub-menu" url={this.props.toggleJewelry} name="Jewelry" />
-						<NavButton propClass = "last sub-menu" url={this.props.toggleSale} name="Sale" />
+						<NavItem className = "first active sub-menu" ><Link to="/">Home</Link></NavItem>
+						<NavItem className = "sub-menu" ><Link to="/figurine">Figurine</Link></NavItem>
+						<NavItem className = "sub-menu" ><Link to="/stickers">Stickers</Link></NavItem>
+						<NavItem className = "sub-menu"><Link  to="/jewelry">Jewelry</Link></NavItem>
+						<NavItem className = "last sub-menu"><Link  to="/sale">Sale</Link></NavItem>
 					</Nav>
 				</div>{/*<!-- //MENU BLOCK -->*/}
 			</div> {/*<!-- //CONTAINER -->*/}
