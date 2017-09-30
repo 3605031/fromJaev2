@@ -59,7 +59,7 @@ class Home extends Component {
 		}
 	}	
 
-/*	componentWillUpdate(nextProps, nextState) {
+	componentWillUpdate(nextProps, nextState) {
 		const script1 = document.createElement("script");
         script1.src = "./js/jquery.jcarousel.js";
         script1.async = true;
@@ -70,7 +70,7 @@ class Home extends Component {
 
         document.body.appendChild(script1);
         document.body.appendChild(script2);
-	}*/
+	}
 
 	renderItems = () => {
 		return(
