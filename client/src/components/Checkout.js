@@ -1,53 +1,125 @@
 import React, { Component } from 'react';
 import axios from "axios";
-import Navbar from "./navbar.js"
+import Navbar from "./navbar.js";
 import { BrowserRouter as Router, Route, browserHistory, Redirect } from 'react-router-dom';
-import {Link} from "react-router-dom"
+import {Link} from "react-router-dom";
+import {Modal,OverlayTrigger,Button} from "react-bootstrap";
+import StripeCheckout from "react-stripe-checkout"
 
 class Checkout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      email: '',
-      password: '',
-      passwordConfirmation: '',
-      redirect:false,
-      products: [],
-      cart: [] //price, quantity, imgUrl, product_name    
+        showCheckOutModal : false,
+        showPaymentModal : false,
+        form: {
+                firstName: "",
+                lastName: "",
+                address: "",
+                email: "",
+        }, 
+        isSubmitted: false,
+        shippingCost: 0,
+        orderId: "",
+        shippingMethods: [],
+        selectedShippingMethod: {},
+        tax: 0
     }
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.openCheckOutModal  = this.openCheckOutModal.bind(this);
+    this.closeCheckOutModal = this.closeCheckOutModal.bind(this);
+    this.openPaymentModal   = this.openPaymentModal.bind(this);
+    this.closePaymentModal  = this.closePaymentModal.bind(this);
+    this.handleInputChange  = this.handleInputChange.bind(this);
+    this.onToken            = this.onToken.bind(this);
+    this.successPayment     = this.successPayment.bind(this);
+    this.errorPayment       = this.errorPayment.bind(this);
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
+    closeCheckOutModal(){
+  		this.setState({ showCheckOutModal:false})
+  	}
 
+  	openCheckOutModal() {
+    	this.setState({ showCheckOutModal: true });
+    }
+    
+    closePaymentModal(){
+  		this.setState({ showPaymentModal:false})
+  	}
 
-  onSubmit(e) {
-    e.preventDefault();
-    if(this.state.username==''||this.state.password==''){
-        alert("Fill out username and PW")
-    } else {
-        if(this.state.password != this.state.passwordConfirmation){
-            alert("PW must match")
-        } else {
-            axios.post("/auth/signup",this.state)
-                .then(  (response) => {
-                    console.log(response.data.success == true);
-                    if(response.data.success == true){
-                        this.setState({redirect:true})
-                    }
-                })
-                    .catch(function (error) {console.log(error)})
+  	openPaymentModal() {
+    	this.setState({ showPaymentModal: true });
+  	}
+      
+    handleInputChange(event) {
+	  // Getting the value and name of the input which triggered the change
+        const value = event.target.value;
+        const name = event.target.name;
+        console.log( value, name)
+        // Updating the input's state
+        let updatedState = Object.assign({}, this.state.form)
+        updatedState[event.target.name] = event.target.value
+        this.setState({form:updatedState})
+    }
+    
+    toggleSubmit = (event) =>{
+      event.preventDefault()
+      let requestObj= this.state.form
+
+      for (let prop in requestObj){
+        if (requestObj[prop] === ""){
+          alert(`Please enter your ${JSON.stringify(prop)}`)
+          return
         }
-    }
-  }
+      }
 
-  renderCartItems = ()=> {
-    return this.props.cart.map(item=>{
+      requestObj.cart = this.props.cart
+
+
+      console.log("form sending to server",this.state.form)
+      axios.post("/cart", requestObj)
+      .then(res=>{
+          let tax = res.data.items.find(taxObj=> taxObj.type === "tax")
+          console.log("res from server side is ", res)
+          this.setState({
+            isSubmitted: !this.state.isSubmitted,
+            shippingMethods:res.data.shipping_methods,
+            selectedShippingMethod:res.data.shipping_methods[1],
+            tax:tax.amount,
+            orderId:res.data.id
+          })
+          this.closeCheckOutModal();
+          this.openPaymentModal();
+      })
+
+
+    }
+
+    onToken = () => token => {
+      axios.post("/pay",
+        {
+          source: token.id,
+          cart: this.props.cart,
+          orderId : this.state.orderId,
+          selectedShippingMethod: this.state.selectedShippingMethod
+        })
+        .then(this.successPayment)
+        .catch(this.errorPayment);    
+    }
+
+    successPayment = response => {
+      console.log("response", response.body)
+
+      
+    }
+
+    errorPayment = data => {
+      console.log("err", data)
+    }
+
+    renderCartItems = ()=> {
+      return this.props.cart.map(item=>{
         return (
              <tr className="cart_item">
                 <td className="product-thumbnail"><a href="product-page.html" ><img src={item.imgUrl} width="100px" alt="" /></a></td>
@@ -85,8 +157,129 @@ class Checkout extends React.Component {
 
     return (
             <div id="page">
+
+            
                 
                 <section className="page_header checkoutheader">
+
+                    <Modal show={this.state.showPaymentModal} onHide={this.closePaymentModal}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Payment Form</Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body>
+                            <table className = "shop_table">
+                                <thead>
+                                <tr>
+                                    <th className= "product-name">Subtotal</th>
+                                    <th className= "product-price">Tax</th>
+                                    <th className= "product-quantity">Shipping</th>
+                                </tr>
+                                </thead>
+                                <tbody className = "checkout_body">
+                                <tr className = "cart_item">
+                                    <td className="product-price">
+                                    ${this.props.totalPrice()}
+                                    </td>
+                                    <td className="product-price">
+                                    ${parseFloat((this.state.tax/100).toFixed(2))}
+                                    </td>
+                                    <td className="product-price">
+                                    ${parseFloat(this.state.selectedShippingMethod.amount/100).toFixed(2)}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <StripeCheckout
+                                name={this.state.form.firstName}
+                                amount={this.props.totalPrice()*100+this.state.tax+this.state.selectedShippingMethod.amount}
+                                token={this.onToken()}
+                                currency={"USD"}
+                                stripeKey={"pk_test_1BL0osBFkpOtUv2tExXFocfj"}
+                            />                       
+                        </Modal.Body>
+        		    </Modal>
+
+                    <Modal show={this.state.showCheckOutModal} onHide={this.closeCheckOutModal}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Check out Form</Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body>
+                            <form onSubmit={this.loginSubmit} className="signup-form">
+                                <div className="form-group">
+                                    <label className="control-label">First Name</label>
+                                    <input
+                                        onChange={this.handleInputChange}
+                                        type="text"
+                                        name="firstName"
+                                        className="form-control"
+                                    />
+                                </div>   
+
+                                <div className="form-group">
+                                    <label className="control-label">Last Name</label>
+                                    <input
+                                        onChange={this.handleInputChange}
+                                        type="text"
+                                        name="lastName"
+                                        className="form-control"
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="control-label">Email</label>
+                                    <input
+                                        onChange={this.handleInputChange}
+                                        type="text"
+                                        name="email"
+                                        className="form-control"
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="control-label">Address</label>
+                                    <input
+                                        onChange={this.handleInputChange}
+                                        type="text"
+                                        name="address"
+                                        className="form-control"
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="control-label">ZipCode</label>
+                                    <input
+                                        onChange={this.handleInputChange}
+                                        type="text"
+                                        name="zipcode"
+                                        className="form-control"
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="control-label">State</label>
+                                    <input
+                                        onChange={this.handleInputChange}
+                                        type="text"
+                                        name="state"
+                                        className="form-control"
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="control-label">Phone</label>
+                                    <input
+                                        onChange={this.handleInputChange}
+                                        type="text"
+                                        name="phone"
+                                        className="form-control"
+                                    />
+                                </div>
+			                    <button className="btn btn-primary btn-lg" onClick={this.toggleSubmit}>Pay</button>
+            			    </form>
+          			    </Modal.Body>
+        		    </Modal>
                     
                     <div className="container">
                         <h3 className="pull-left"><b>Shopping bag</b> (Note: due to limited stock, we have disabled ability to adjust quantity inside shopping bag)</h3>
@@ -136,7 +329,7 @@ class Checkout extends React.Component {
                                 <input type="text" name="coupon"/>
                                 <input type="submit" value="Apply"/>
                             </form>
-                            <Link className="btn active" to="/userinfo" >Check out</Link>
+                            <button className="btn active" onClick={this.openCheckOutModal}>Check out</button>
                             <Link className="btn inactive" to="/" >Continue shopping</Link>
                         </div>
                     </div>{/*Sidebar*/}
