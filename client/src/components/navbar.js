@@ -247,7 +247,7 @@ export default class NavBar extends React.Component {
 					
 		{/*			<!-- SHOPPING BAG -->*/}
 					<div className="shopping_bag">
-						<a className="shopping_bag_btn" href="javascript:void(0);" ><i className="fa fa-shopping-cart"></i><p>shopping bag</p><span id="bagquantity">{this.props.totalQuantity}</span></a>
+						<a className="shopping_bag_btn" onClick={this.props.shoppingBag}><i className="fa fa-shopping-cart"></i><p>shopping bag</p><span id="bagquantity">{this.props.totalQuantity}</span></a>
 						<div className="cart">
 							<ul className="cart-items cart-main">
 								{this.props.cartItems()}

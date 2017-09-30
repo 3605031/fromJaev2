@@ -15,6 +15,7 @@ class Home extends Component {
 		this.state = {
 	
 		}
+		this.shoppingBag = this.shoppingBag.bind(this);
 	}
 
 
@@ -30,14 +31,22 @@ class Home extends Component {
 			});
 		}
 		if ( $ ) {
-			$('.some-class').on('click', function(e) {
-				console.log('clicked something', e);
-			});
+			jQuery('.shopping_bag .cart').slideUp(1);
+			jQuery('.top_search_form form').slideUp(1);
 		}
 		if ( $ && window.tovarfotoHeight ) {
     		console.log('calling tovarfotoHeight')
         	tovarfotoHeight();
     	}
+	}
+
+	shoppingBag(){
+		if($){
+			jQuery(document).ready(function() {
+				jQuery('.shopping_bag .cart').slideToggle();
+				jQuery('.shopping_bag .cart').parent().toggleClass('cart_active');
+			})
+		}
 	}	
 
 	componentDidUpdate(prevProps, prevState) {
@@ -52,7 +61,7 @@ class Home extends Component {
 
 
 		        <header>
-		      		<Navbar totalPrice={this.props.totalPrice} totalQuantity={this.props.totalQuantity} cart={this.props.cart} cartItems={this.props.cartItems}/>
+		      		<Navbar shoppingBag={this.shoppingBag} totalPrice={this.props.totalPrice} totalQuantity={this.props.totalQuantity} cart={this.props.cart} cartItems={this.props.cartItems}/>
 		        </header>
 
 

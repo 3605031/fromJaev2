@@ -43,13 +43,13 @@ jQuery(document).ready(function() {
 /*-----------------------------------------------------------------------------------*/
 /*	SHOPPING BAG
 /*-----------------------------------------------------------------------------------*/
-jQuery(document).ready(function() {
-	jQuery('.shopping_bag .cart').slideUp(1);
-	jQuery('.shopping_bag_btn').click(function(){
-		jQuery('.shopping_bag .cart').slideToggle();
-		jQuery('.shopping_bag .cart').parent().toggleClass('cart_active');
-	});
-});
+// jQuery(document).ready(function() {
+// 	jQuery('.shopping_bag .cart').slideUp(1);
+// 	jQuery('.shopping_bag_btn').click(function(){
+// 		jQuery('.shopping_bag .cart').slideToggle();
+// 		jQuery('.shopping_bag .cart').parent().toggleClass('cart_active');
+// 	});
+// });
 
 
 

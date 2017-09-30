@@ -10,7 +10,10 @@ export default class FeaturedProducts extends React.Component {
         this.renderItems = this.renderItems.bind(this)
 	}
     componentDidMount() {
-    	
+    	if ( $ && window.tovarfotoHeight ) {
+    		console.log('calling tovarfotoHeight')
+        	tovarfotoHeight();
+    	}
     }
 
 	renderItems(){
