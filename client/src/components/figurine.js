@@ -7,17 +7,21 @@ import Footer from "./Footer.js"
 import API from "../utils/API.js"
 import '../App.css';
 import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom';
+import Flexbox from "flexbox-react"
+import Item from "./common/item.js"
 
-class Home extends Component {
+
+class Figurine extends Component {
 	constructor(props) {
 		super(props);
 /*        this.props.handleAddToCart = this.handleAddToCart.bind(this)*/
         this.renderItems = this.renderItems.bind(this)
+        this.shoppingBag = this.shoppingBag.bind(this)
 	}
 
 	renderItems(){
 
-		let newproducts = this.props.products.filter((item)=>item.featured)
+		let newproducts = this.props.products.filter((item)=>item.product_category === "Figurine")
 		//eventully, dummyobj will be replaced with an API call to retrieve the items from database 
 		return newproducts.map((toBeReplaced, index)=>{
 
@@ -39,15 +43,24 @@ class Home extends Component {
 			});
 		}
 		if ( $ ) {
-			$('.some-class').on('click', function(e) {
-				console.log('clicked something', e);
-			});
+			jQuery('.shopping_bag .cart').slideUp(1);
+			jQuery('.top_search_form form').slideUp(1);
 		}
 		if ( $ && window.tovarfotoHeight ) {
     		console.log('calling tovarfotoHeight')
         	tovarfotoHeight();
     	}
 	}	
+
+	shoppingBag(){
+		if($){
+			jQuery(document).ready(function() {
+				jQuery('.shopping_bag .cart').slideToggle();
+				jQuery('.shopping_bag .cart').parent().toggleClass('cart_active');
+			})
+		}
+	}	
+
 
 	componentDidUpdate(prevProps, prevState) {
 		console.log('Figurine component, componentDidUpdate');
@@ -59,7 +72,7 @@ class Home extends Component {
 	    return (
 		    <div id="page">
 		        <header>
-		      		<Navbar totalPrice={this.props.totalPrice} totalQuantity={this.props.totalQuantity} cart={this.props.cart} cartItems={this.props.cartItems}/>
+		      		<Navbar shoppingBag={this.shoppingBag} totalPrice={this.props.totalPrice} totalQuantity={this.props.totalQuantity} cart={this.props.cart} cartItems={this.props.cartItems}/>
 		        </header>
 
 
@@ -72,9 +85,20 @@ class Home extends Component {
 					</div>
 				</section>
 		        
-		        <Featured handleAddToCart={this.props.handleAddToCart} products={this.props.products}/>
+				<section className="tovar_section">
+					{/*<!-- CONTAINER -->*/}
+					<div className="container">
+						<h2 id="feature_title">Figurines</h2>
+						
+						{/*<!-- ROW -->*/}
+						<Flexbox>
+							<Flexbox className="tovar_wrapper" data-appear-top-offset='-100' data-animated='fadeInUp' style={{flexWrap:"wrap"}}>
+								{this.renderItems()}
+							</Flexbox>
+						</Flexbox>				
+					</div>{/*<!-- CONTAINER -->*/}
+				</section>
 
-		        <NewArrival handleAddToCart={this.props.handleAddToCart} products={this.props.products}/>
 
 		        <hr className="container"/>
 
@@ -84,4 +108,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default Figurine;
