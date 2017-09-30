@@ -3,6 +3,23 @@ import React from "react"
 export default class Item extends React.Component{
 	constructor(props) {
 		super(props);
+		this.state = {
+			imgCss:{
+				outline: "0",
+				verticalAlign: "top",
+			    border: "0",
+			    maxWidth: "100.1%",
+			    height: "auto"
+			},
+			imghCss:{
+				opacity: "0.25",
+				outline: "0",
+				verticalAlign: "top",
+			    border: "0",
+			    maxWidth: "100.1%",
+			    height: "auto"
+			}
+		}
 		
 	}
 

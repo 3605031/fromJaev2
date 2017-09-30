@@ -13,7 +13,7 @@ var userSchema = new Schema({
     address:{type: String, required: false},
     state:{type: String, required: false},
     zipCode:{type: String, required: false},
-    phoneNumber:{type: String, required: false},
+    phoneNumber:{type: String, required: false}
     
 });
 

@@ -46,6 +46,23 @@ class Figurine extends Component {
 			.catch(err => console.log(err))
 	}
 
+	displayFigurines = () =>{
+		API.getFigurines()
+			.then(res=>{
+				console.log(res)
+				this.setState((prevState)=>{
+					console.log(prevState)
+					return {
+						figurines: res.data
+					}
+				})
+			})
+			.then(()=>{
+				console.log(this.state.figurines)
+			})
+			.catch(err=> console.log(err))
+	}
+
 	renderItems(){
 
 		return this.state.figurines.map((toBeReplaced, index)=>{
@@ -57,14 +74,7 @@ class Figurine extends Component {
 		tovarfotoHeight()
 	}
 
-	setStateOnUpdate(){
-		let figurines = this.props.products.filter((item)=>item.product_category === "Figurine")
-		console.log("figurines are",figurines)	
-		this.setState({
-			fromProps: figurines
-		})
-		return 	
-	}
+
 
 	componentDidMount(){	
 		this.getFigurines()			
@@ -91,6 +101,7 @@ class Figurine extends Component {
 
 	}	
 
+
 	shoppingBag(){
 		if($){
 			jQuery(document).ready(function() {
@@ -99,6 +110,7 @@ class Figurine extends Component {
 			})
 		}
 	}	
+
 
 
 	componentWillUpdate(nextProps, nextState) {
@@ -140,10 +152,8 @@ class Figurine extends Component {
 	    return (
 		    <div id="page">
 		        <header>
-		      		<Navbar shoppingBag={this.shoppingBag} totalPrice={this.props.totalPrice} totalQuantity={this.props.totalQuantity} cart={this.props.cart} cartItems={this.props.cartItems}/>
+		      		<Navbar showSignUpModal = {this.props.showSignUpModal} showLogInModal = {this.props.showLogInModal} closeSignUp = {this.props.closeSignUp} closeLogIn = {this.props.closeLogIn} openSignUp = {this.props.openSignUp} openLogIn = {this.props.openLogIn} firstName = {this.props.firstName} isAuthenticated = {this.props.isAuthenticated} onSubmit = {this.props.onSubmit} loginSubmit = {this.props.loginSubmit} onChange = {this.props.onChange}  shoppingBag={this.shoppingBag} totalPrice={this.props.totalPrice} totalQuantity={this.props.totalQuantity} cart={this.props.cart} cartItems={this.props.cartItems}/>
 		        </header>
-
-
 				<section id="home" className="padbot0">		
 					<div className="flexslider top_slider">
 						<ul className="slides">
