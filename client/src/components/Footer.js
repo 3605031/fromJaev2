@@ -65,8 +65,8 @@ export default class Footer extends React.Component{
 					<div className="foot_logo"><a href="index.html" ><img src="images/foot_logo.png" alt=""/></a></div>
 					
 					<div className="copyright_inf">
-						<span>Glammy Shop© 2014</span> |
-						<span>Theme by Anna Balashova</span> |
+						<span>FromJae Shop© 2017</span> |
+						<span>Website by Blake Huynh</span> |
 						<a className="back_top" href="javascript:void(0);" >Back to Top <i className="fa fa-angle-up"></i></a>
 					</div>
 				</div>{/*<!-- //CONTAINER -->*/}
