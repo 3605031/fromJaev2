@@ -287,7 +287,7 @@ class Checkout extends React.Component {
                                     <input
                                         onChange={this.handleInputChange}
                                         type="text"
-                                        name="zipcode"
+                                        name="zipCode"
                                         className="form-control"
                                         value={this.state.form.zipCode}
                                     />
@@ -309,7 +309,7 @@ class Checkout extends React.Component {
                                     <input
                                         onChange={this.handleInputChange}
                                         type="text"
-                                        name="phone"
+                                        name="phoneNumber"
                                         className="form-control"
                                         value = {this.state.form.phoneNumber}
                                     />

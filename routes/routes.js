@@ -74,7 +74,7 @@ router.post("/pay", function(req, res){
 				//Order/Create the label
 				shippo.transaction.create({
 				    "shipment": shipment,
-				    "carrier_account": data.results[4].object_id,
+				    "carrier_account": data.results[3].object_id,
 				    "servicelevel_token": "usps_priority"
 				}, function(err, transaction) {
 				    // asynchronously called
@@ -91,7 +91,7 @@ router.post("/pay", function(req, res){
 					                        },
 					                        "To": [
 					                                {
-					                                        "Email": "jessselu@gmail.com",
+					                                        "Email": paidOrder.email,
 					                                        "Name": paidOrder.shipping.name
 					                                }
 					                        ],
