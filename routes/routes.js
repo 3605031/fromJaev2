@@ -79,7 +79,22 @@ router.post("/pay", function(req, res){
 				}, function(err, transaction) {
 				    // asynchronously called
 				    console.log("Shippo error", err)
-				    console.log("Shippo transaction", transaction)
+					console.log("Shippo transaction", transaction)
+					let email_body = "<div><ul>"
+					let tax = (paidOrder.items[(paidOrder.items.length)-2].amount/100)
+					let shipping_fee = (paidOrder.items[(paidOrder.items.length)-1].amount/100)
+					console.log("Paid order ARRAY:",paidOrder.items)
+					console.log(paidOrder.items[(paidOrder.items.length)-2])
+					for(let x = 0;x<=(paidOrder.items.length)-2;x++){
+						if(x==(paidOrder.items.length)-3){
+							email_body+=`<li>Tax: $${tax}</li>`
+						}
+						else if(x<(paidOrder.items.length)-3){
+							email_body += `<li>${paidOrder.items[x].description}    $${(paidOrder.items[x].amount/100).toFixed(2)} x ${paidOrder.items[x].quantity}</li>`
+						}
+					}
+					email_body += `<li>Shipping fee: $${shipping_fee}</li>`
+					email_body += "</ul></div>"
 				    mailjet
 				    .post("send", {'version': 'v3.1'})
 					    .request({
@@ -96,8 +111,11 @@ router.post("/pay", function(req, res){
 					                                }
 					                        ],
 					                        "Subject": "Your fromJae tracking number",
-					                        "TextPart": "Your order is being processed. Please check your tracking number to see updates",
-					                        "HTMLPart": `<a href=${transaction.tracking_url_provider}>USPS tracking #</a>`
+											"HTMLPart": `Here is a summary of your recent order:
+														${email_body}
+														Order ID: ${paidOrder.id}
+														<div>Total Paid : $${(paidOrder.amount/100).toFixed(2)}</div>
+														<a href=${transaction.tracking_url_provider}>USPS tracking #</a>`
 					                }
 					        ]
 					    })
